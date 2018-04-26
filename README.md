@@ -18,7 +18,7 @@ For check excel correctness and relations.
 
 <b>三、Excel关系表说明：</b>
 <ol>
-<li>第一张表为关系表，用来检测引用是否存在，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表)	外联列(引用的列)。</li>
+<li>第一张表为关系表，用来检测引用是否存在。第一行表头不读取，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表)	外联列(引用的列)。</li>
 </ol>
 
 <b>四、错误信息说明：</b>
@@ -37,4 +37,16 @@ For check excel correctness and relations.
 <li>第六行：Excel检测策略。</li>
 <li>第七行：错误输出策略。</li>
 <li>第八行：错误记录策略。</li>
+</ol>
+
+<b>六、被检测Excel规范：</b>
+<ol>
+<li>第一行：A格为数据起始行号，B格为数据起始列号，C格为数据结束行号(如果读取时发现整行为空，则提前结束)，D格为数据结束列号。</li>
+<li>第二行：说明。</li>
+<li>第三行：客户端变量名称(不填表示不用)。</li>
+<li>第四行：数据类型(int、string、double、float、array_int、array_string、array_double、array_float，array开头的类型服务器都算string)。</li>
+<li>第五行：索引名称(none为无，primary为主键)。</li>
+<li>第六行：服务器变量名称(不填表示不用)。</li>
+<li>不填的格子，数值类型默认转为数值0。</li>
+<li>array类型需要用&&分割。</li>
 </ol>
