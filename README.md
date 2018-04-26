@@ -1,7 +1,7 @@
 # ExcelChecker
 For check excel correctness and relations.
 
-<b>一、配置要求：</b>
+<b>一、环境要求：</b>
 <ol>
 <li>JDK1.7+。</li>
 <li><a href="https://jingyan.baidu.com/article/fd8044fa2c22f15031137a2a.html">配置java环境变量。</a></li>
@@ -17,4 +17,22 @@ For check excel correctness and relations.
 <b>三、Excel关系表说明：</b>
 <ol>
 <li>第一张表为关系表，用来检测引用是否存在，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表)	外联列(引用的列)。</li>
+</ol>
+
+<b>四、错误信息说明：</b>
+<ol>
+<li>错误信息分为四项：表名、行号、列名和错误信息。</li>
+<li>排版方式为空格填充表名、行、列，并右对齐。</li>
+</ol>
+
+<b>五、config文件说明(从上到下表示了处理流程)：</b>
+<ol>
+<li>第一行：path文件加载算法。</li>
+<li>第二行：被检测表加载策略。</li>
+<li>第三行：Excel存储提供者。</li>
+<li>第四行：关系表加载策略。</li>
+<li>第五行：引用加载策略。</li>
+<li>第六行：Excel检测策略。</li>
+<li>第七行：错误输出策略。</li>
+<li>第八行：错误记录策略。</li>
 </ol>
