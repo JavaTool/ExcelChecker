@@ -2,8 +2,10 @@
 For check excel correctness and relations.
 
 配置要求：
-1、JDK1.7+。
-2、配置java环境变量：https://jingyan.baidu.com/article/fd8044fa2c22f15031137a2a.html。
+<ol>
+<li>JDK1.7+。</li>
+<li>配置java环境变量：https://jingyan.baidu.com/article/fd8044fa2c22f15031137a2a.html。</li>
+</ol>
 
 使用说明：
 1、config文件没有特殊说明，请不要修改。
