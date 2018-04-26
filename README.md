@@ -1,7 +1,7 @@
 # ExcelChecker
 For check excel correctness and relations.
 
-<a href="https://github.com/JavaTool/ExcelChecker/wiki">Release</a>
+<a href="https://github.com/JavaTool/ExcelChecker/wiki"><h1>已发布版本信息</h1></a>
 
 <b>一、环境要求：</b>
 <ol>
