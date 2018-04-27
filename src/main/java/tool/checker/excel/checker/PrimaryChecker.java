@@ -43,7 +43,6 @@ public final class PrimaryChecker implements ContentChecker {
 				hasPrimary = true;
 			}
 			readPrimary(row, content, primaryKeys, item.getName(), errorCatcher);
-			return false;
 		}
 		return true;
 	}
