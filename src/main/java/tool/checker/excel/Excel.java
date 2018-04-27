@@ -1,21 +1,21 @@
 package tool.checker.excel;
 
+import static tool.checker.excel.Utils.readCellAsString;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
+
+import tool.checker.excel.checker.ContentChecker;
 
 public class Excel {
 	
@@ -39,45 +39,30 @@ public class Excel {
 	
 	private List<Integer> refs = Lists.newLinkedList();
 	
+	private Map<String, String> arrayGroups = Maps.newHashMap();
+	
+	private List<ContentChecker> checkers = Lists.newLinkedList();
+	
+	private Sheet sheet;
+	
 	private boolean isLoad;
 	
 	public void addRelations(String name, ExcelRelation relation) {
 		relations.put(name, relation);
 	}
 	
-	public static String readCellAsString(Cell cell) {
-		return cell == null ? "" : readCellAsString(cell, true, cell.getCellType());
-	}
-	
-	public static String readCellAsString(Cell cell, boolean isInt, int cellType) {
-		if (cell == null) {
-			return "";
-		}
-		switch (cellType) {
-		case Cell.CELL_TYPE_BLANK : 
-			return "";
-		case Cell.CELL_TYPE_BOOLEAN : 
-			return cell.getBooleanCellValue() ? "true" : "false";
-		case Cell.CELL_TYPE_ERROR : 
-			return cell.getErrorCellValue() + "";
-		case Cell.CELL_TYPE_FORMULA : 
-			return readCellAsString(cell, isInt, cell.getCachedFormulaResultType());
-		case Cell.CELL_TYPE_NUMERIC : 
-			if (isInt) {
-				return ((int) cell.getNumericCellValue()) + "";
-			}
-			return (cell.getNumericCellValue() + "").replace(".0", "");
-		case Cell.CELL_TYPE_STRING : 
-			return cell.getStringCellValue();
-		default : 
-			throw new IllegalArgumentException("Unknow cell type : " + cell.getCellType() + ".");
+	public void addArray(String array) {
+		for (String column : array.split(",")) {
+			arrayGroups.put(column, array);
 		}
 	}
 	
-	public void loadExcel(Sheet sheet, Set<String> itemNames, ErrorCatcher errorCatcher) {
+	public void loadExcel(Sheet sheet, ErrorCatcher errorCatcher) {
 		if (isLoad) {
 			return;
 		}
+		
+		this.sheet = sheet;
 		Row range = sheet.getRow(0);
 		Row fieldTypes = sheet.getRow(3);
 		Row dataIndex = sheet.getRow(4);
@@ -117,26 +102,27 @@ public class Excel {
 			items[index].setName(name);
 			items[index].setColum(i);
 			colums.put(name, index);
-			if (itemNames != null && itemNames.contains(items[index].getName())) {
-				refs.add(index);
-			}
 		}
 		
 		isLoad = true;
 	}
 	
-	public void loadRefs(Sheet sheet) {
+	public void loadRefs(Set<String> itemNames) {
 		for (int i = firstRow;i < lastRow;i++) {
 			Row row = sheet.getRow(i);
-			for (Integer colum : refs) {
-				String content = readCellAsString(row.getCell(items[colum].getColum()));
-				refKeys.put(items[colum].getName(), content);
+			for (String columnName : itemNames) {
+				int index = colums.get(columnName);
+				if (items[index] != null && itemNames.contains(items[index].getName())) {
+					for (Integer colum : refs) {
+						String content = readCellAsString(row.getCell(items[colum].getColum()));
+						refKeys.put(items[colum].getName(), content);
+					}
+				}
 			}
 		}
 	}
 	
-	public void checkData(Sheet sheet, ErrorCatcher errorCatcher, Function<String, Excel> supplier) {
-		Set<String> primaryKeys = Sets.newHashSet();
+	public void checkData(ExcelsData excelsData) {
 		String[] contents = new String[lastColumn - firstColumn];
 		for (int i = firstRow;i < lastRow;i++) {
 			Row row = sheet.getRow(i);
@@ -148,113 +134,18 @@ public class Excel {
 			if (blank == contents.length) {
 				break;
 			}
-			boolean hasPrimary = false;
 			for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
 				if (items[index] == null || row == null) {
 					continue;
 				}
 				String content = contents[index];
-				if ("primary".equalsIgnoreCase(items[index].getIndex())) {
-					if (hasPrimary) {
-						errorCatcher.catchError(excelName, i, items[index].getName(), "重复的主键列 [" + items[index].getName() + "].");
-						continue;
-					} else {
-						hasPrimary = true;
-					}
-					readPrimary(i, content, primaryKeys, items[index].getName(), errorCatcher);
-				} else if (!Strings.isNullOrEmpty(content)) {
-					switch (items[index].getType().toLowerCase()) {
-					case "int" : 
-						readInt(i, content, items[index].getName(), errorCatcher);
-						break;
-					case "array_int" : 
-						readArrayInt(i, content, items[index].getName(), errorCatcher);
-						break;
-					case "double" : 
-						readDouble(i, content, items[index].getName(), errorCatcher);
+				for (ContentChecker checker : checkers) {
+					if (!checker.check(this, i, content, items[index], excelsData)) {
 						break;
 					}
-					checkForeign(items[index], i, content, supplier, errorCatcher);
 				}
 			}
 		}
-	}
-	
-	private void checkForeign(ExcelItem item, int row, String content, Function<String, Excel> supplier, ErrorCatcher errorCatcher) {
-		String name = item.getName();
-		if (relations.containsKey(name)) {
-			ExcelRelation excelRelation = relations.get(name);
-			String otherExcel = excelRelation.getExcel();
-			Excel excel = supplier.apply(otherExcel);
-			String foreign = excelRelation.getForeign();
-			switch (item.getType().toLowerCase()) {
-			case "array_int" : 
-			case "array_string" : 
-				String[] array = content.split("&&");
-				for (int k = 0;k < array.length;k++) {
-					if (!excel.refKeys.get(foreign).contains(array[k])) {
-						errorCatcher.catchError(excelName, row + 1, name, "找不到关系 [" + array[k] + "] 到表 " + otherExcel + " 's " + foreign + ".");
-					}
-				}
-				break;
-			default :
-				if (!excel.refKeys.get(foreign).contains(content)) {
-					errorCatcher.catchError(excelName, row + 1, name, "找不到关系 [" + content + "] 到表 " + otherExcel + " 's " + foreign + ".");
-				}
-			}
-		}
-	}
-	
-	private void readInt(int row, String content, String column, ErrorCatcher errorCatcher) {
-		try {
-			Integer.parseInt(content);
-		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为int.");
-		}
-	}
-	
-	private void readArrayInt(int row, String content, String column, ErrorCatcher errorCatcher) {
-		String[] array = content.split("&&");
-		for (int k = 0;k < array.length;k++) {
-			try {
-				Integer.parseInt(array[k]);
-			} catch (Exception e) {
-				errorCatcher.catchError(excelName, row + 1, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
-			}
-		}
-	}
-	
-	private void readDouble(int row, String content, String column, ErrorCatcher errorCatcher) {
-		try {
-			Double.parseDouble(content);
-		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为double.");
-		}
-	}
-	
-	private void readPrimary(int row, String content, Set<String> primaryKeys, String column, ErrorCatcher errorCatcher) {
-		try {
-			Preconditions.checkArgument(primaryKeys.add(content), "主键 [%s] 重复.", content);
-		} catch (IllegalArgumentException e) {
-			String error = e.getMessage();
-			errorCatcher.catchError(excelName, row + 1, column, (Strings.isNullOrEmpty(error) ? content + " 不能转为int." : error));
-		}
-	}
-
-	public int getFirstRow() {
-		return firstRow;
-	}
-
-	public int getFirstColumn() {
-		return firstColumn;
-	}
-
-	public int getLastRow() {
-		return lastRow;
-	}
-
-	public int getLastColumn() {
-		return lastColumn;
 	}
 
 	public Map<String, ExcelRelation> getRelations() {
@@ -264,9 +155,21 @@ public class Excel {
 	public void setExcelName(String excelName) {
 		this.excelName = excelName;
 	}
+	
+	public String getExcelName() {
+		return excelName;
+	}
 
 	public boolean isLoad() {
 		return isLoad;
+	}
+	
+	public void addChecker(ContentChecker checker) {
+		checkers.add(checker);
+	}
+	
+	public SetMultimap<String, String> getRefKeys() {
+		return refKeys;
 	}
 
 }

@@ -1,12 +1,9 @@
 package tool.checker.excel.output;
 
-import java.io.File;
-import java.util.Collection;
-
-import com.google.common.base.Function;
+import tool.checker.excel.ExcelsData;
 
 public interface Outputer {
 	
-	void out(File dir, Function<String, String> configs, Collection<String> errors);
+	void out(ExcelsData excelsData);
 
 }

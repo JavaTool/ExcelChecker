@@ -3,9 +3,8 @@ package tool.checker.excel.output;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 
-import com.google.common.base.Function;
+import tool.checker.excel.ExcelsData;
 
 public final class TxtOutputerFactory implements OutputerFactory {
 
@@ -14,8 +13,8 @@ public final class TxtOutputerFactory implements OutputerFactory {
 		return new Outputer() {
 			
 			@Override
-			public void out(File dir, Function<String, String> configs, Collection<String> errors) {
-				File file = new File(dir, configs.apply("outPath"));
+			public void out(ExcelsData excelsData) {
+				File file = new File(excelsData.getDir(), excelsData.getConfigs().apply("outPath"));
 				file.delete();
 				file.getParentFile().mkdirs();
 				try {
@@ -24,7 +23,7 @@ public final class TxtOutputerFactory implements OutputerFactory {
 					e.printStackTrace();
 				}
 				StringBuilder builder = new StringBuilder();
-				for (String error : errors) {
+				for (String error : excelsData.getErrorCatcher().getErrors()) {
 					builder.append(error).append("\r\n");
 				}
 				try (FileWriter writer = new FileWriter(file)) {

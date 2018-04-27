@@ -53,11 +53,11 @@ public final class DefaultRefLoaderFactory implements RefLoaderFactory {
 					Excel excel = supplier.apply(excelName);
 					Sheet sheet = wb.getSheetAt(0);
 					excel.setExcelName(fileName);
-					excel.loadExcel(sheet, refKeys.get(excelName), errorCatcher);
-					if (!excel.isLoad()) {
-						return;
-					}
-					excel.loadRefs(sheet);
+//					excel.loadExcel(sheet, refKeys.get(excelName), errorCatcher);
+//					if (!excel.isLoad()) {
+//						return;
+//					}
+//					excel.loadRefs(sheet);
 					System.out.println("加载引用表 : " + fileName);
 				} catch (Exception e) {
 					e.printStackTrace();

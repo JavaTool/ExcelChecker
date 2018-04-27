@@ -1,0 +1,59 @@
+package tool.checker.excel.checker;
+
+import com.google.common.base.Strings;
+
+import tool.checker.excel.ErrorCatcher;
+import tool.checker.excel.Excel;
+import tool.checker.excel.ExcelItem;
+import tool.checker.excel.ExcelsData;
+
+public final class DataTypeChecker implements ContentChecker {
+
+	@Override
+	public boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData) {
+		if (!Strings.isNullOrEmpty(content)) {
+			ErrorCatcher errorCatcher = excelsData.getErrorCatcher();
+			String excelName = excel.getExcelName();
+			switch (item.getType().toLowerCase()) {
+			case "int" : 
+				readInt(row, content, item.getName(), errorCatcher, excelName);
+				break;
+			case "array_int" : 
+				readArrayInt(row, content, item.getName(), errorCatcher, excelName);
+				break;
+			case "double" : 
+				readDouble(row, content, item.getName(), errorCatcher, excelName);
+				break;
+			}
+		}
+		return true;
+	}
+	
+	private void readInt(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+		try {
+			Integer.parseInt(content);
+		} catch (Exception e) {
+			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为int.");
+		}
+	}
+	
+	private void readArrayInt(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+		String[] array = content.split("&&");
+		for (int k = 0;k < array.length;k++) {
+			try {
+				Integer.parseInt(array[k]);
+			} catch (Exception e) {
+				errorCatcher.catchError(excelName, row + 1, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
+			}
+		}
+	}
+	
+	private void readDouble(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+		try {
+			Double.parseDouble(content);
+		} catch (Exception e) {
+			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为double.");
+		}
+	}
+
+}
