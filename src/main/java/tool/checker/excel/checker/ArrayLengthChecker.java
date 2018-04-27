@@ -36,7 +36,7 @@ public final class ArrayLengthChecker implements ContentChecker {
 		
 		if (lengths.containsKey(key)) {
 			if (content.split("&&").length != lengths.get(key)) {
-				excelsData.getErrorCatcher().catchError(excelName, row + 1, column, "数组长度不同[" + column + "]在组" + key + "中。");
+				excelsData.getErrorCatcher().catchError(excelName, row + 1, column, "数组列[" + key + "]长度不同。");
 			}
 		} else {
 			lengths.put(key, content.split("&&").length);
