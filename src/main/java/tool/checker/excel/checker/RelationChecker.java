@@ -4,11 +4,11 @@ import java.util.Map;
 
 import com.google.common.collect.SetMultimap;
 
-import tool.checker.excel.ErrorCatcher;
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
+import tool.checker.excel.function.ErrorCatcher;
 
 public class RelationChecker implements ContentChecker {
 

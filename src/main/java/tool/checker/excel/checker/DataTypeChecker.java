@@ -2,10 +2,10 @@ package tool.checker.excel.checker;
 
 import com.google.common.base.Strings;
 
-import tool.checker.excel.ErrorCatcher;
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
+import tool.checker.excel.function.ErrorCatcher;
 
 public final class DataTypeChecker implements ContentChecker {
 

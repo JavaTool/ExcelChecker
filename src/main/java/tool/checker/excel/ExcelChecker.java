@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.config.ConfigsFactory;
 import tool.checker.excel.finder.ExcelFinder;
+import tool.checker.excel.function.ErrorCatcher;
 import tool.checker.excel.output.OutputerFactory;
 
 public class ExcelChecker {

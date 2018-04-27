@@ -16,6 +16,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 
 import tool.checker.excel.checker.ContentChecker;
+import tool.checker.excel.function.ErrorCatcher;
 
 public class Excel {
 	

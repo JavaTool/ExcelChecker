@@ -6,6 +6,8 @@ import java.util.Map;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
+import tool.checker.excel.function.ErrorCatcher;
+
 public class ExcelsData {
 	
 	private File dir;

@@ -6,10 +6,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 
-import tool.checker.excel.ErrorCatcher;
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
+import tool.checker.excel.function.ErrorCatcher;
 
 public final class PrimaryChecker implements ContentChecker {
 	
