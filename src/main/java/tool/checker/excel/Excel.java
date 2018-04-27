@@ -38,8 +38,6 @@ public class Excel {
 	
 	private SetMultimap<String, String> refKeys = HashMultimap.create();
 	
-	private List<Integer> refs = Lists.newLinkedList();
-	
 	private Map<String, String> arrayGroups = Maps.newHashMap();
 	
 	private List<ContentChecker> checkers = Lists.newLinkedList();
@@ -114,10 +112,8 @@ public class Excel {
 			for (String columnName : itemNames) {
 				int index = colums.get(columnName);
 				if (items[index] != null && itemNames.contains(items[index].getName())) {
-					for (Integer colum : refs) {
-						String content = readCellAsString(row.getCell(items[colum].getColum()));
-						refKeys.put(items[colum].getName(), content);
-					}
+					String content = readCellAsString(row.getCell(items[index].getColum()));
+					refKeys.put(items[index].getName(), content);
 				}
 			}
 		}
@@ -171,6 +167,10 @@ public class Excel {
 	
 	public SetMultimap<String, String> getRefKeys() {
 		return refKeys;
+	}
+	
+	public Map<String, String> getArrayGroups() {
+		return arrayGroups;
 	}
 
 }

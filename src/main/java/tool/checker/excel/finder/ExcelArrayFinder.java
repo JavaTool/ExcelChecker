@@ -7,9 +7,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
-
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
@@ -18,7 +15,6 @@ public final class ExcelArrayFinder implements ExcelFinder {
 
 	@Override
 	public void find(ExcelsData excelsData) {
-		SetMultimap<String, String> setMap = HashMultimap.create();
 		try {
 			Workbook config = Utils.createWorkbook(new File(excelsData.getDir(), excelsData.getConfigs().apply("relationPath")));
 			Sheet sheet = config.getSheet("arrayGroups");
@@ -29,7 +25,7 @@ public final class ExcelArrayFinder implements ExcelFinder {
 				String columArray = row.getCell(1).getStringCellValue();
 				Excel excel = excels.get(excelName);
 				if (excel != null) {
-					setMap.put(excelName, columArray);
+					excel.addArray(columArray);
 				}
 			}
 		} catch (Exception e) {

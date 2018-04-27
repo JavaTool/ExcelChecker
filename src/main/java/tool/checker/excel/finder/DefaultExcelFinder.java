@@ -12,7 +12,7 @@ import tool.checker.excel.Utils;
 import tool.checker.excel.function.Callback;
 import tool.checker.excel.function.ExcelFilter;
 
-public class DefaultExcelFinder implements ExcelFinder {
+public final class DefaultExcelFinder implements ExcelFinder {
 
 	@Override
 	public void find(final ExcelsData excelsData) {

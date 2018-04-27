@@ -10,7 +10,7 @@ import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.function.ErrorCatcher;
 
-public class RelationChecker implements ContentChecker {
+public final class RelationChecker implements ContentChecker {
 
 	@Override
 	public boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData) {

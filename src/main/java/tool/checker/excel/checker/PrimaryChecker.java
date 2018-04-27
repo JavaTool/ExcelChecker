@@ -27,6 +27,7 @@ public final class PrimaryChecker implements ContentChecker {
 		if (!excel.getExcelName().equals(excelName)) {
 			excelName = excel.getExcelName();
 			primaryKeys.clear();
+			this.row = 0;
 		}
 		if (this.row != row) {
 			this.row = row;

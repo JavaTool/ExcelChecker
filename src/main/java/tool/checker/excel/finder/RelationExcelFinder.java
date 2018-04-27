@@ -16,7 +16,7 @@ import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
 
-public class RelationExcelFinder implements ExcelFinder {
+public final class RelationExcelFinder implements ExcelFinder {
 
 	@Override
 	public void find(ExcelsData excelsData) {
