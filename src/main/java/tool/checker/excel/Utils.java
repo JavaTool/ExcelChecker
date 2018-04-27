@@ -3,11 +3,16 @@ package tool.checker.excel;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.LineNumberReader;
+import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+import com.google.common.collect.Lists;
 
 import tool.checker.excel.function.Callback;
 import tool.checker.excel.function.ErrorCatcher;
@@ -86,6 +91,20 @@ public class Utils {
 		default : 
 			throw new IllegalArgumentException("Unknow cell type : " + cell.getCellType() + ".");
 		}
+	}
+	
+	public static List<String> readLines(File file) {
+		List<String> lines = Lists.newLinkedList();
+		try (LineNumberReader pathReader = new LineNumberReader(new FileReader(file))) {
+			String line;
+			while ((line = pathReader.readLine()) != null) {
+				lines.add(line);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return lines;
 	}
 
 }

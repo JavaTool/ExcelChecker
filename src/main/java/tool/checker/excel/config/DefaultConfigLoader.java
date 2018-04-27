@@ -1,18 +1,24 @@
 package tool.checker.excel.config;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
-public final class JavaMainConfigsFactory implements ConfigsFactory {
+import tool.checker.excel.ExcelsData;
+import tool.checker.excel.Utils;
+
+public class DefaultConfigLoader implements ConfigLoader {
 
 	@Override
-	public Function<String, String> createConfigs(String[] args) {
-		String relationPath = args.length > 0 ? args[0] : "D:\\ExcelCheckerConfig.xlsx";
-		String allPath = args.length > 1 ? args[1] : "D:\\workspace\\data\\excel";
-		String paths = args.length > 2 ? args[2] : "";
-		String outPath = args.length > 3 ? args[3] : "D:\\excel_check_result.txt";
+	public void load(ExcelsData excelsData) {
+		List<String> args = Utils.readLines(new File(excelsData.getDir(), "path.txt"));
+		String allPath = args.size() > 0 ? args.get(0) : "D:\\workspace\\data\\excel";
+		String paths = args.size() > 1 ? args.get(1) : "";
+		String relationPath = args.size() > 2 ? args.get(2) : "ExcelCheckerConfig.xlsx";
+		String outPath = args.size() > 3 ? args.get(3) : "excel_check_result.txt";
 		System.out.println("外联关系配置文件路径 : " + relationPath);
 		System.out.println("全部表路径 : " + allPath);
 		System.out.println("检测文件组 : " + paths);
@@ -23,14 +29,15 @@ public final class JavaMainConfigsFactory implements ConfigsFactory {
 		map.put("allPath", allPath);
 		map.put("paths", paths);
 		map.put("outPath", outPath);
-		return new Function<String, String>() {
+		
+		excelsData.setConfigs(new Function<String, String>() {
 
 			@Override
 			public String apply(String input) {
 				return map.get(input);
 			}
 			
-		};
+		});
 	}
 
 }
