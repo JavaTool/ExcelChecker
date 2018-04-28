@@ -104,7 +104,7 @@ public class YunChangExcel extends BaseExcel {
 			@Override
 			public void scan(Row row) {
 				for (ContentChecker checker : checkers) {
-					checker.rowBegin(row.getRowNum());
+					checker.rowBegin(row.getRowNum() + 1);
 				}
 				for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
 					if (items[index] == null || row == null) {

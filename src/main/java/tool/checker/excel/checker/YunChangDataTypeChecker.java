@@ -6,7 +6,7 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 
-public final class DataTypeChecker extends BaseContentChecker {
+public final class YunChangDataTypeChecker extends BaseContentChecker {
 
 	@Override
 	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {

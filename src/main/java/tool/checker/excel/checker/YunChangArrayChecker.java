@@ -10,7 +10,7 @@ import tool.checker.excel.finder.ArrayFinder;
 import tool.checker.excel.function.DataConsumer;
 
 @DataConsumer({@DataConsumer.Type(value=ArrayFinder.class)})
-public final class ArrayLengthChecker extends BaseContentChecker {
+public final class YunChangArrayChecker extends BaseContentChecker {
 	
 	private final Map<String, Integer> lengths = Maps.newHashMap();
 
