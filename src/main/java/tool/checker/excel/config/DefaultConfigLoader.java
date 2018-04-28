@@ -17,8 +17,8 @@ public class DefaultConfigLoader implements ConfigLoader {
 		List<String> args = Utils.readLines(new File(excelsData.getDir(), "path.txt"));
 		String allPath = args.size() > 0 ? args.get(0) : "D:\\workspace\\data\\excel";
 		String paths = args.size() > 1 ? args.get(1) : "";
-		String relationPath = args.size() > 2 ? args.get(2) : "ExcelCheckerConfig.xlsx";
-		String outPath = args.size() > 3 ? args.get(3) : "excel_check_result.txt";
+		String relationPath = args.size() > 2 && args.get(2).trim().length() > 0 ? args.get(2) : "ExcelCheckerConfig.xlsx";
+		String outPath = args.size() > 3 && args.get(3).trim().length() > 0 ? args.get(3) : "excel_check_result.txt";
 		System.out.println("外联关系配置文件路径 : " + relationPath);
 		System.out.println("全部表路径 : " + allPath);
 		System.out.println("检测文件组 : " + paths);

@@ -8,7 +8,7 @@ import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.config.ConfigLoader;
 import tool.checker.excel.finder.ExcelFinder;
 import tool.checker.excel.function.ErrorCatcher;
-import tool.checker.excel.output.OutputerFactory;
+import tool.checker.excel.output.Outputer;
 
 public class ExcelChecker {
 	
@@ -18,23 +18,27 @@ public class ExcelChecker {
 		ExcelsData excelsData = new ExcelsData();
 		excelsData.setDir(dir);
 		try (LineNumberReader reader = new LineNumberReader(new FileReader(new File(dir, "config.txt")))) {
-			ConfigLoader configLoader = (ConfigLoader) Class.forName(reader.readLine()).newInstance();
-			configLoader.load(excelsData);
+			// 加载配置
+			((ConfigLoader) Class.forName(reader.readLine()).newInstance()).load(excelsData);
+			// 创建错误收集策略
 			excelsData.setErrorCatcher((ErrorCatcher) Class.forName(reader.readLine()).newInstance());
+			// 执行加载策略组
 			for (String finderName : reader.readLine().split(",")) {
 				((ExcelFinder) Class.forName(finderName).newInstance()).find(excelsData);
 			}
+			// 创建检测策略组
 			for (String checkerName : reader.readLine().split(",")) {
 				ContentChecker checker = ((ContentChecker) Class.forName(checkerName).newInstance());
 				for (Excel excel : excelsData.getExcels().values()) {
 					excel.addChecker(checker);
 				}
 			}
-			OutputerFactory outputerFactory = (OutputerFactory) Class.forName(reader.readLine()).newInstance();
+			// 检测
 			for (Excel excel : excelsData.getExcels().values()) {
 				excel.checkData(excelsData);
 			}
-			outputerFactory.createOutputer().out(excelsData);
+			// 创建输出策略
+			((Outputer) Class.forName(reader.readLine()).newInstance()).out(excelsData);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
