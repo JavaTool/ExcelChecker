@@ -13,7 +13,7 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 <b>二、使用说明：</b>
 <ol>
 <li>config文件没有特殊说明，请不要修改。</li>
-<li>Error.bat为执行文件，首次执行或本软件文件夹位置发生变化时需要修改内容。右键该文件选择编辑，将第一行最后一段双引号中的内容替换为当前路径。</li>
+<li>Error.bat为执行文件，请勿修改。</li>
 <li>错误信息会输出到excel_check_result.txt中。</li>
 </ol>
 
