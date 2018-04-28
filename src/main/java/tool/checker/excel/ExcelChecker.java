@@ -29,12 +29,12 @@ public class ExcelChecker {
 			// 创建检测策略组
 			for (String checkerName : reader.readLine().split(",")) {
 				ContentChecker checker = ((ContentChecker) Class.forName(checkerName).newInstance());
-				for (Excel excel : excelsData.getExcels().values()) {
+				for (BaseExcel excel : excelsData.getExcels().values()) {
 					excel.addChecker(checker);
 				}
 			}
 			// 检测
-			for (Excel excel : excelsData.getExcels().values()) {
+			for (BaseExcel excel : excelsData.getExcels().values()) {
 				excel.checkData(excelsData);
 			}
 			// 创建输出策略

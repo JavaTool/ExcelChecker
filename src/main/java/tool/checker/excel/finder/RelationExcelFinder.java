@@ -18,7 +18,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
 
-import tool.checker.excel.Excel;
+import tool.checker.excel.BaseExcel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
@@ -49,13 +49,13 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 		try {
 			Workbook config = Utils.createWorkbook(new File(excelsData.getDir(), relationPath));
 			Sheet sheet = config.getSheetAt(0);
-			Map<String, Excel> excels = excelsData.getExcels();
+			Map<String, BaseExcel> excels = excelsData.getExcels();
 			Map<String, File> files = excelsData.getFiles();
 			for (int i = 1;i <= sheet.getLastRowNum();i++) {
 				Row row = sheet.getRow(i);
 				String excelName = row.getCell(0).getStringCellValue();
 				String columName = row.getCell(1).getStringCellValue();
-				Excel excel = excels.get(excelName);
+				BaseExcel excel = excels.get(excelName);
 				String otherExcel = row.getCell(2).getStringCellValue();
 				// 未加载的非指定检测表
 				if (excel == null) {
@@ -77,7 +77,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				refKeys.put(otherExcel, foreign);
 			}
 			for (String excelName : refKeys.keySet()) {
-				Excel excel = excels.get(excelName);
+				BaseExcel excel = excels.get(excelName);
 				loadRefs(excel, refKeys.get(excelName));
 			}
 			excelsData.getClassToInstanceMap().putInstance(RelationFinder.class, this);
@@ -86,7 +86,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 		}
 	}
 	
-	private void loadRefs(final Excel excel, final Set<String> itemNames) {
+	private void loadRefs(final BaseExcel excel, final Set<String> itemNames) {
 		final SetMultimap<String, String> refKeys = HashMultimap.create();
 		excel.readEachRow(new RowScaner() {
 			

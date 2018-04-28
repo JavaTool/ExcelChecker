@@ -1,15 +1,15 @@
 package tool.checker.excel.checker;
 
-import tool.checker.excel.Excel;
+import tool.checker.excel.BaseExcel;
 
 public abstract class BaseContentChecker implements ContentChecker {
 	
-	protected Excel excel;
+	protected BaseExcel excel;
 	
 	protected int row;
 
 	@Override
-	public void excelBegin(Excel excel) {
+	public void excelBegin(BaseExcel excel) {
 		this.excel = excel;
 		excelBegin();
 	}

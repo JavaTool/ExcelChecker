@@ -15,7 +15,7 @@ public class ExcelsData {
 	
 	private File dir;
 	
-	private Map<String, Excel> excels = Maps.newHashMap();
+	private Map<String, BaseExcel> excels = Maps.newHashMap();
 	
 	private Map<String, File> files = Maps.newHashMap();
 	
@@ -25,7 +25,7 @@ public class ExcelsData {
 	
 	private ClassToInstanceMap<DataSupplier> classToInstanceMap = MutableClassToInstanceMap.create();
 
-	public Map<String, Excel> getExcels() {
+	public Map<String, BaseExcel> getExcels() {
 		return excels;
 	}
 

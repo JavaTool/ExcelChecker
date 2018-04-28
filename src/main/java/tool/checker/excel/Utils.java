@@ -53,8 +53,8 @@ public class Utils {
 		}
 	}
 	
-	public static Excel createExcel(File file, ErrorCatcher errorCatcher) {
-		Excel excel = new Excel();
+	public static YunChangExcel createExcel(File file, ErrorCatcher errorCatcher) {
+		YunChangExcel excel = new YunChangExcel();
 		excel.setExcelName(file.getName());
 		try {
 			excel.loadExcel(Utils.createWorkbook(file).getSheetAt(0), errorCatcher);

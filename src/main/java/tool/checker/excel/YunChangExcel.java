@@ -14,7 +14,7 @@ import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.function.RowScaner;
 
-public class Excel extends BaseExcel {
+public class YunChangExcel extends BaseExcel {
 	
 	public void loadExcel(Sheet sheet, ErrorCatcher errorCatcher) {
 		if (this.sheet != null) {
