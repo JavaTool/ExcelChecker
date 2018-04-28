@@ -1,6 +1,6 @@
 package tool.checker.excel.config;
 
-import tool.checker.excel.ExcelsData;
+import tool.checker.excel.data.ExcelsData;
 
 public interface ConfigLoader {
 	

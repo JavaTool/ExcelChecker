@@ -6,9 +6,9 @@ import java.util.Map;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
 
-import tool.checker.excel.BaseExcel;
-import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
+import tool.checker.excel.data.BaseExcel;
+import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.Callback;
 import tool.checker.excel.function.ExcelFilter;
 

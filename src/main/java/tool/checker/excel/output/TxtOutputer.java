@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import tool.checker.excel.ExcelsData;
+import tool.checker.excel.data.ExcelsData;
 
 public class TxtOutputer implements Outputer {
 

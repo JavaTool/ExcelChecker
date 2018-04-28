@@ -6,6 +6,8 @@ import java.io.LineNumberReader;
 
 import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.config.ConfigLoader;
+import tool.checker.excel.data.BaseExcel;
+import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ExcelFinder;
 import tool.checker.excel.output.Outputer;

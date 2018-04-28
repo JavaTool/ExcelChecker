@@ -1,6 +1,6 @@
 package tool.checker.excel.checker;
 
-import tool.checker.excel.BaseExcel;
+import tool.checker.excel.data.BaseExcel;
 
 public abstract class BaseContentChecker implements ContentChecker {
 	

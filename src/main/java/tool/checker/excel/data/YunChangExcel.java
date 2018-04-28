@@ -1,4 +1,4 @@
-package tool.checker.excel;
+package tool.checker.excel.data;
 
 import static tool.checker.excel.Utils.readCellAsString;
 

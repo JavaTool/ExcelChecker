@@ -14,6 +14,8 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.google.common.collect.Lists;
 
+import tool.checker.excel.data.BaseExcel;
+import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.Callback;
 
 public class Utils {

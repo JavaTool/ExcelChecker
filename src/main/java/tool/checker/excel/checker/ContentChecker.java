@@ -1,8 +1,8 @@
 package tool.checker.excel.checker;
 
-import tool.checker.excel.BaseExcel;
-import tool.checker.excel.ExcelItem;
-import tool.checker.excel.ExcelsData;
+import tool.checker.excel.data.BaseExcel;
+import tool.checker.excel.data.ExcelItem;
+import tool.checker.excel.data.ExcelsData;
 
 public interface ContentChecker {
 	

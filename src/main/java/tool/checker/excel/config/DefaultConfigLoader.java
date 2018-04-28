@@ -7,8 +7,8 @@ import java.util.Map;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
-import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
+import tool.checker.excel.data.ExcelsData;
 
 public class DefaultConfigLoader implements ConfigLoader {
 

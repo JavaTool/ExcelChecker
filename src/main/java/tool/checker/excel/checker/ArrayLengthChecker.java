@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import tool.checker.excel.ExcelItem;
-import tool.checker.excel.ExcelsData;
+import tool.checker.excel.data.ExcelItem;
+import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.finder.ArrayFinder;
 
 public final class ArrayLengthChecker extends BaseContentChecker {

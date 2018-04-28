@@ -10,9 +10,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import tool.checker.excel.BaseExcel;
-import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
+import tool.checker.excel.data.BaseExcel;
+import tool.checker.excel.data.ExcelsData;
 
 public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
 	
