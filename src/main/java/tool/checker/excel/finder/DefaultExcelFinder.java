@@ -1,9 +1,12 @@
 package tool.checker.excel.finder;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 
 import tool.checker.excel.Utils;
@@ -20,7 +23,16 @@ public final class DefaultExcelFinder implements ExcelFinder {
 		String allPath = configs.apply("allPath");
 		String config = configs.apply("paths");
 		File parent = new File(allPath);
+		final List<String> ignores = Splitter.on(',').splitToList(excelsData.getConfigs().apply("ignore"));
 		final Map<String, File> files = excelsData.getFiles();
+		FileFilter fileFilter = new FileFilter() {
+			
+			@Override
+			public boolean accept(File pathname) {
+				return ExcelFilter.EXCEL_FILTER.accept(pathname) && !ignores.contains(pathname.getName());
+			}
+			
+		};
 		// 记录全部文件
 		Utils.findLoadFiles(parent, ExcelFilter.EXCEL_FILTER, new Callback<File>() {
 			
@@ -50,7 +62,7 @@ public final class DefaultExcelFinder implements ExcelFinder {
 		};
 		// 加载需要检测的Excel
 		for (String path : Strings.isNullOrEmpty(config) ? new String[]{""} : config.split(",")) {
-			Utils.findLoadFiles(new File(parent, path), ExcelFilter.EXCEL_FILTER, callback);
+			Utils.findLoadFiles(new File(parent, path), fileFilter, callback);
 		}
 	}
 

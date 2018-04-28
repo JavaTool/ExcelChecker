@@ -60,21 +60,23 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				// 未加载的非指定检测表
 				if (excel == null) {
 					// 依赖指定检测的表
-					if (excels.containsKey(otherExcel) && files.containsKey(excel)) {
-						excel = Utils.createExcel(files.get(excel), excelsData);
+					if (excels.containsKey(otherExcel) && files.containsKey(excelName)) {
+						excel = Utils.createExcel(files.get(excelName), excelsData);
 						excels.put(excelName, excel);
+						System.out.println("加载影响引用的文件[" + excelName + "]");
 					} else { // 不依赖指定检测的表，跳过
 						continue;
 					}
-				} else if (!files.containsKey(excel)) { // 加载的指定检测表
+				} else if (!files.containsKey(excelName)) { // 加载的指定检测表
 					// 加载未加载的依赖表
 					if (!excels.containsKey(otherExcel)) {
 						excels.put(otherExcel, Utils.createExcel(files.get(otherExcel), excelsData));
+						System.out.println("加载需要引用的文件[" + otherExcel + "]");
 					}
+					String foreign = row.getCell(3).getStringCellValue();
+					relations.put(excelName, columName, new ExcelRelation(otherExcel, foreign));
+					refKeys.put(otherExcel, foreign);
 				}
-				String foreign = row.getCell(3).getStringCellValue();
-				relations.put(excelName, columName, new ExcelRelation(otherExcel, foreign));
-				refKeys.put(otherExcel, foreign);
 			}
 			for (String excelName : refKeys.keySet()) {
 				BaseExcel excel = excels.get(excelName);
