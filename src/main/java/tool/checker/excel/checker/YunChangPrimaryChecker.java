@@ -10,7 +10,7 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 
-public final class PrimaryChecker extends BaseContentChecker {
+public final class YunChangPrimaryChecker extends BaseContentChecker {
 	
 	private boolean hasPrimary = false;
 	

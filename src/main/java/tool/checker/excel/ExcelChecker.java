@@ -12,7 +12,7 @@ import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ExcelFinder;
 import tool.checker.excel.output.Outputer;
 
-public class ExcelChecker {
+final class ExcelChecker {
 	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {

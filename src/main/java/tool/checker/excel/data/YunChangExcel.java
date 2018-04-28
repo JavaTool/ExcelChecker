@@ -22,11 +22,13 @@ public class YunChangExcel extends BaseExcel {
 		}
 		
 		this.sheet = sheet;
+
 		Row range = sheet.getRow(0);
+		Row clientFieldNames = sheet.getRow(2);
 		Row fieldTypes = sheet.getRow(3);
 		Row dataIndex = sheet.getRow(4);
-		Row fieldNames = sheet.getRow(5);
-		if (fieldNames == null || dataIndex == null || fieldTypes == null) {
+		Row serverFieldNames = sheet.getRow(5);
+		if (clientFieldNames == null || serverFieldNames == null || dataIndex == null || fieldTypes == null) {
 			errorCatcher.catchError(excelName, "表头信息不对，忽略。");
 			return;
 		}
@@ -41,14 +43,29 @@ public class YunChangExcel extends BaseExcel {
 			errorCatcher.catchError(excelName, 1, "", "读取范围错误。");
 			return;
 		}
-		
+
+		readItems(clientFieldNames, fieldTypes, dataIndex, serverFieldNames, errorCatcher);
+	}
+	
+	private void readItems(Row clientFieldNames, Row fieldTypes, Row dataIndex, Row serverFieldNames, ErrorCatcher errorCatcher) {
 		int size = lastColumn - firstColumn;
 		items = new ExcelItem[size];
 		Map<String, Integer> names = Maps.newHashMap();
 		for (int i = firstColumn, index = 0;i < lastColumn;i++, index++) {
-			String name = readCellAsString(fieldNames.getCell(i));
-			if (Strings.isNullOrEmpty(name)) {
+			String clientName = readCellAsString(clientFieldNames.getCell(i));
+			String serverName = readCellAsString(serverFieldNames.getCell(i));
+			String name;
+			if (Strings.isNullOrEmpty(clientName) && Strings.isNullOrEmpty(serverName)) {
 				continue;
+			} else if (Strings.isNullOrEmpty(serverName)) {
+				name = clientName;
+			} else if (Strings.isNullOrEmpty(clientName)) {
+				name = serverName;
+			} else if (!clientName.equals(serverName)) {
+				errorCatcher.catchError(excelName, 6, serverName, "列名不一致.");
+				continue;
+			} else {
+				name = serverName;
 			}
 			items[index] = new ExcelItem();
 			items[index].setType(readCellAsString(fieldTypes.getCell(i)));
