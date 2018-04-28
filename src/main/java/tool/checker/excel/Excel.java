@@ -32,19 +32,11 @@ public class Excel {
 	
 	private Map<String, Integer> colums = Maps.newHashMap();
 	
-	private Map<String, String> arrayGroups = Maps.newHashMap();
-	
 	private List<ContentChecker> checkers = Lists.newLinkedList();
 	
 	private Sheet sheet;
 	
 	private boolean isLoad;
-	
-	public void addArray(String array) {
-		for (String column : array.split(",")) {
-			arrayGroups.put(column, array);
-		}
-	}
 	
 	public void loadExcel(Sheet sheet, ErrorCatcher errorCatcher) {
 		if (isLoad) {
@@ -110,37 +102,25 @@ public class Excel {
 		isLoad = true;
 	}
 	
-	public void checkData(ExcelsData excelsData) {
-		for (int i = firstRow;i < lastRow;i++) {
-			Row row = sheet.getRow(i);
-			for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
-				if (items[index] == null || row == null) {
-					continue;
-				}
-				String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
-				for (ContentChecker checker : checkers) {
-					if (!checker.check(this, i, content, items[index], excelsData)) {
-						break;
+	public void checkData(final ExcelsData excelsData) {
+		readEachRow(new RowScaner() {
+			
+			@Override
+			public void scan(Row row) {
+				for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
+					if (items[index] == null || row == null) {
+						continue;
+					}
+					String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
+					for (ContentChecker checker : checkers) {
+						if (!checker.check(Excel.this, row.getRowNum(), content, items[index], excelsData)) {
+							break;
+						}
 					}
 				}
 			}
-		}
-	}
-	
-	public int getFirstRow() {
-		return firstRow;
-	}
-	
-	public int getFirstColumn() {
-		return firstColumn;
-	}
-	
-	public int getLastRow() {
-		return lastRow;
-	}
-	
-	public int getLastColumn() {
-		return lastColumn;
+			
+		});
 	}
 	
 	public void setExcelName(String excelName) {
@@ -157,10 +137,6 @@ public class Excel {
 	
 	public void addChecker(ContentChecker checker) {
 		checkers.add(checker);
-	}
-	
-	public Map<String, String> getArrayGroups() {
-		return arrayGroups;
 	}
 	
 	public void readEachRow(RowScaner rowScaner) {

@@ -33,7 +33,7 @@ public final class DataTypeChecker implements ContentChecker {
 		try {
 			Integer.parseInt(content);
 		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为int.");
+			errorCatcher.catchError(excelName, row, column, content + " 不能转为int.");
 		}
 	}
 	
@@ -43,7 +43,7 @@ public final class DataTypeChecker implements ContentChecker {
 			try {
 				Integer.parseInt(array[k]);
 			} catch (Exception e) {
-				errorCatcher.catchError(excelName, row + 1, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
+				errorCatcher.catchError(excelName, row, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
 			}
 		}
 	}
@@ -52,7 +52,7 @@ public final class DataTypeChecker implements ContentChecker {
 		try {
 			Double.parseDouble(content);
 		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row + 1, column, content + " 不能转为double.");
+			errorCatcher.catchError(excelName, row, column, content + " 不能转为double.");
 		}
 	}
 

@@ -14,7 +14,7 @@ import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
 
-public final class ExcelArrayFinder implements ArrayFinder {
+public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
 	
 	private final Table<String, String, String> arrayGroups = HashBasedTable.create();
 

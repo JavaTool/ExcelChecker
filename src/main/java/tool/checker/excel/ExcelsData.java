@@ -8,7 +8,7 @@ import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.MutableClassToInstanceMap;
 
-import tool.checker.excel.finder.ExcelFinder;
+import tool.checker.excel.function.DataSupplier;
 import tool.checker.excel.function.ErrorCatcher;
 
 public class ExcelsData {
@@ -23,7 +23,7 @@ public class ExcelsData {
 	
 	private ErrorCatcher errorCatcher;
 	
-	private ClassToInstanceMap<ExcelFinder> classToInstanceMap = MutableClassToInstanceMap.create();
+	private ClassToInstanceMap<DataSupplier> classToInstanceMap = MutableClassToInstanceMap.create();
 
 	public Map<String, Excel> getExcels() {
 		return excels;
@@ -61,7 +61,7 @@ public class ExcelsData {
 		this.files = files;
 	}
 
-	public ClassToInstanceMap<ExcelFinder> getClassToInstanceMap() {
+	public ClassToInstanceMap<DataSupplier> getClassToInstanceMap() {
 		return classToInstanceMap;
 	}
 

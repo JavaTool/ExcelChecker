@@ -25,7 +25,7 @@ import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
 import tool.checker.excel.function.RowScaner;
 
-public final class RelationExcelFinder implements RelationFinder {
+public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 	
 	private final Table<String, String, ExcelRelation> relations = HashBasedTable.create();
 	

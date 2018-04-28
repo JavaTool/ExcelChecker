@@ -52,7 +52,7 @@ public final class PrimaryChecker implements ContentChecker {
 			Preconditions.checkArgument(primaryKeys.add(content), "主键 [%s] 重复.", content);
 		} catch (IllegalArgumentException e) {
 			String error = e.getMessage();
-			errorCatcher.catchError(excelName, row + 1, column, (Strings.isNullOrEmpty(error) ? content + " 不能转为int." : error));
+			errorCatcher.catchError(excelName, row, column, (Strings.isNullOrEmpty(error) ? content + " 不能转为int." : error));
 		}
 	}
 

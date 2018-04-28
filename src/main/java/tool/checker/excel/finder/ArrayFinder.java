@@ -1,6 +1,8 @@
 package tool.checker.excel.finder;
 
-public interface ArrayFinder extends ExcelFinder {
+import tool.checker.excel.function.DataSupplier;
+
+public interface ArrayFinder extends DataSupplier {
 	
 	String getArrayGroup(String excelName, String column);
 

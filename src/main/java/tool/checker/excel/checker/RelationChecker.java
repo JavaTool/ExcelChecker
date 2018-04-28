@@ -34,13 +34,13 @@ public final class RelationChecker implements ContentChecker {
 			String[] array = content.split("&&");
 			for (int k = 0;k < array.length;k++) {
 				if (!refKeys.get(foreign).contains(array[k])) {
-					errorCatcher.catchError(excelName, row + 1, name, "找不到关系 [" + array[k] + "] 到表 " + otherExcelName + " 's " + foreign + ".");
+					errorCatcher.catchError(excelName, row, name, "找不到关系 [" + array[k] + "] 到表 " + otherExcelName + " 's " + foreign + ".");
 				}
 			}
 			break;
 		default :
 			if (!refKeys.get(foreign).contains(content)) {
-				errorCatcher.catchError(excelName, row + 1, name, "找不到关系 [" + content + "] 到表 " + otherExcelName + " 's " + foreign + ".");
+				errorCatcher.catchError(excelName, row, name, "找不到关系 [" + content + "] 到表 " + otherExcelName + " 's " + foreign + ".");
 			}
 		}
 		return true;
