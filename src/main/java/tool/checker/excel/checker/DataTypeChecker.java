@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
-import tool.checker.excel.function.ErrorCatcher;
+import tool.checker.excel.error.ErrorCatcher;
 
 public final class DataTypeChecker extends BaseContentChecker {
 

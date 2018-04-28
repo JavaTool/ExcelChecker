@@ -20,7 +20,6 @@ import com.google.common.collect.Table;
 
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
-import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.Utils;
 import tool.checker.excel.function.RowScaner;

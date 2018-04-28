@@ -4,10 +4,10 @@ import com.google.common.base.Strings;
 import com.google.common.collect.SetMultimap;
 
 import tool.checker.excel.ExcelItem;
-import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
+import tool.checker.excel.error.ErrorCatcher;
+import tool.checker.excel.finder.ExcelRelation;
 import tool.checker.excel.finder.RelationFinder;
-import tool.checker.excel.function.ErrorCatcher;
 
 public final class RelationChecker extends BaseContentChecker {
 

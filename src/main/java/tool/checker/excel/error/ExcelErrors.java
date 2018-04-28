@@ -1,12 +1,10 @@
-package tool.checker.excel;
+package tool.checker.excel.error;
 
 import java.util.List;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-
-import tool.checker.excel.function.ErrorCatcher;
 
 public class ExcelErrors implements ErrorCatcher {
 	

@@ -8,8 +8,8 @@ import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.MutableClassToInstanceMap;
 
+import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.function.DataSupplier;
-import tool.checker.excel.function.ErrorCatcher;
 
 public class ExcelsData {
 	
