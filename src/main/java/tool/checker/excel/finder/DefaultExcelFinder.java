@@ -39,7 +39,7 @@ public final class DefaultExcelFinder implements ExcelFinder {
 				String fileName = t.getName();
 				if (Utils.isExcelFile(fileName)) {
 					String key = Utils.getFileName(fileName);
-					excels.put(key, Utils.createExcel(t, excelsData.getErrorCatcher()));
+					excels.put(key, Utils.createExcel(t, excelsData));
 					files.remove(key);
 					System.out.println("加载需要检测的文件[" + fileName + "]");
 				} else {

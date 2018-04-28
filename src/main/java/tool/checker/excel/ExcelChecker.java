@@ -12,12 +12,15 @@ import tool.checker.excel.output.Outputer;
 
 public class ExcelChecker {
 	
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 		String configPath = args.length > 0 ? args[0].replace("\\", "\\\\") : "F:\\software\\product\\excelChecker\\";
 		File dir = new File(configPath);
 		ExcelsData excelsData = new ExcelsData();
 		excelsData.setDir(dir);
 		try (LineNumberReader reader = new LineNumberReader(new FileReader(new File(dir, "config.txt")))) {
+			// 加载Excel类
+			excelsData.setExcelClass((Class<BaseExcel>) Class.forName(reader.readLine()));
 			// 加载配置
 			((ConfigLoader) Class.forName(reader.readLine()).newInstance()).load(excelsData);
 			// 创建错误收集策略

@@ -61,7 +61,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				if (excel == null) {
 					// 依赖指定检测的表
 					if (excels.containsKey(otherExcel) && files.containsKey(excel)) {
-						excel = Utils.createExcel(files.get(excel), excelsData.getErrorCatcher());
+						excel = Utils.createExcel(files.get(excel), excelsData);
 						excels.put(excelName, excel);
 					} else { // 不依赖指定检测的表，跳过
 						continue;
@@ -69,7 +69,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				} else if (!files.containsKey(excel)) { // 加载的指定检测表
 					// 加载未加载的依赖表
 					if (!excels.containsKey(otherExcel)) {
-						excels.put(otherExcel, Utils.createExcel(files.get(otherExcel), excelsData.getErrorCatcher()));
+						excels.put(otherExcel, Utils.createExcel(files.get(otherExcel), excelsData));
 					}
 				}
 				String foreign = row.getCell(3).getStringCellValue();

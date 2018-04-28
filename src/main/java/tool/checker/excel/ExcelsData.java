@@ -24,6 +24,8 @@ public class ExcelsData {
 	private ErrorCatcher errorCatcher;
 	
 	private ClassToInstanceMap<DataSupplier> classToInstanceMap = MutableClassToInstanceMap.create();
+	
+	private Class<BaseExcel> excelClass;
 
 	public Map<String, BaseExcel> getExcels() {
 		return excels;
@@ -63,6 +65,14 @@ public class ExcelsData {
 
 	public ClassToInstanceMap<DataSupplier> getClassToInstanceMap() {
 		return classToInstanceMap;
+	}
+
+	public Class<BaseExcel> getExcelClass() {
+		return excelClass;
+	}
+
+	public void setExcelClass(Class<BaseExcel> excelClass) {
+		this.excelClass = excelClass;
 	}
 
 }

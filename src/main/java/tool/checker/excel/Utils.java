@@ -14,7 +14,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.google.common.collect.Lists;
 
-import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.function.Callback;
 
 public class Utils {
@@ -53,15 +52,17 @@ public class Utils {
 		}
 	}
 	
-	public static YunChangExcel createExcel(File file, ErrorCatcher errorCatcher) {
-		YunChangExcel excel = new YunChangExcel();
-		excel.setExcelName(file.getName());
+	public static BaseExcel createExcel(File file, ExcelsData excelsData) {
 		try {
-			excel.loadExcel(Utils.createWorkbook(file).getSheetAt(0), errorCatcher);
+			BaseExcel excel = excelsData.getExcelClass().newInstance();
+			excel.setExcelName(file.getName());
+			excel.loadExcel(Utils.createWorkbook(file).getSheetAt(0), excelsData.getErrorCatcher());
+			return excel;
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(1);
+			return null;
 		}
-		return excel;
 	}
 	
 	public static String readCellAsString(Cell cell) {
