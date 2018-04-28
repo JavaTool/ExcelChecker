@@ -4,19 +4,17 @@ import static tool.checker.excel.Utils.readCellAsString;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.SetMultimap;
 
 import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.function.ErrorCatcher;
+import tool.checker.excel.function.RowScaner;
 
 public class Excel {
 	
@@ -34,10 +32,6 @@ public class Excel {
 	
 	private Map<String, Integer> colums = Maps.newHashMap();
 	
-	private Map<String, ExcelRelation> relations = Maps.newHashMap();
-	
-	private SetMultimap<String, String> refKeys = HashMultimap.create();
-	
 	private Map<String, String> arrayGroups = Maps.newHashMap();
 	
 	private List<ContentChecker> checkers = Lists.newLinkedList();
@@ -45,10 +39,6 @@ public class Excel {
 	private Sheet sheet;
 	
 	private boolean isLoad;
-	
-	public void addRelations(String name, ExcelRelation relation) {
-		relations.put(name, relation);
-	}
 	
 	public void addArray(String array) {
 		for (String column : array.split(",")) {
@@ -102,24 +92,7 @@ public class Excel {
 			items[index].setColum(i);
 			colums.put(name, index);
 		}
-		
-		isLoad = true;
-	}
-	
-	public void loadRefs(Set<String> itemNames) {
-		for (int i = firstRow;i < lastRow;i++) {
-			Row row = sheet.getRow(i);
-			for (String columnName : itemNames) {
-				int index = colums.get(columnName);
-				if (items[index] != null && itemNames.contains(items[index].getName())) {
-					String content = readCellAsString(row.getCell(items[index].getColum()));
-					refKeys.put(items[index].getName(), content);
-				}
-			}
-		}
-	}
-	
-	public void checkData(ExcelsData excelsData) {
+
 		String[] contents = new String[lastColumn - firstColumn];
 		for (int i = firstRow;i < lastRow;i++) {
 			Row row = sheet.getRow(i);
@@ -129,13 +102,22 @@ public class Excel {
 				blank += Strings.isNullOrEmpty(contents[index]) ? 1 : 0;
 			}
 			if (blank == contents.length) {
+				lastRow = i;
 				break;
 			}
+		}
+		
+		isLoad = true;
+	}
+	
+	public void checkData(ExcelsData excelsData) {
+		for (int i = firstRow;i < lastRow;i++) {
+			Row row = sheet.getRow(i);
 			for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
 				if (items[index] == null || row == null) {
 					continue;
 				}
-				String content = contents[index];
+				String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
 				for (ContentChecker checker : checkers) {
 					if (!checker.check(this, i, content, items[index], excelsData)) {
 						break;
@@ -144,9 +126,21 @@ public class Excel {
 			}
 		}
 	}
-
-	public Map<String, ExcelRelation> getRelations() {
-		return relations;
+	
+	public int getFirstRow() {
+		return firstRow;
+	}
+	
+	public int getFirstColumn() {
+		return firstColumn;
+	}
+	
+	public int getLastRow() {
+		return lastRow;
+	}
+	
+	public int getLastColumn() {
+		return lastColumn;
 	}
 	
 	public void setExcelName(String excelName) {
@@ -165,12 +159,18 @@ public class Excel {
 		checkers.add(checker);
 	}
 	
-	public SetMultimap<String, String> getRefKeys() {
-		return refKeys;
-	}
-	
 	public Map<String, String> getArrayGroups() {
 		return arrayGroups;
+	}
+	
+	public void readEachRow(RowScaner rowScaner) {
+		for (int i = firstRow;i < lastRow;i++) {
+			rowScaner.scan(sheet.getRow(i));
+		}
+	}
+	
+	public ExcelItem getExcelItem(String columnName) {
+		return colums.containsKey(columnName) ? items[colums.get(columnName)] : null;
 	}
 
 }

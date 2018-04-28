@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.MutableClassToInstanceMap;
 
+import tool.checker.excel.finder.ExcelFinder;
 import tool.checker.excel.function.ErrorCatcher;
 
 public class ExcelsData {
@@ -19,6 +22,8 @@ public class ExcelsData {
 	private Function<String, String> configs;
 	
 	private ErrorCatcher errorCatcher;
+	
+	private ClassToInstanceMap<ExcelFinder> classToInstanceMap = MutableClassToInstanceMap.create();
 
 	public Map<String, Excel> getExcels() {
 		return excels;
@@ -54,6 +59,10 @@ public class ExcelsData {
 
 	public void setFiles(Map<String, File> files) {
 		this.files = files;
+	}
+
+	public ClassToInstanceMap<ExcelFinder> getClassToInstanceMap() {
+		return classToInstanceMap;
 	}
 
 }

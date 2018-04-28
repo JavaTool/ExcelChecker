@@ -7,6 +7,7 @@ import com.google.common.collect.Maps;
 import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
+import tool.checker.excel.finder.ArrayFinder;
 
 public final class ArrayLengthChecker implements ContentChecker {
 	
@@ -29,7 +30,7 @@ public final class ArrayLengthChecker implements ContentChecker {
 		}
 		
 		String column = item.getName();
-		String key = excel.getArrayGroups().get(column);
+		String key = excelsData.getClassToInstanceMap().getInstance(ArrayFinder.class).getArrayGroup(content, column);
 		if (key == null) {
 			return true;
 		}
