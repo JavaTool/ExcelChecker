@@ -58,9 +58,9 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 <b>八、检测策略：</b>
 <ol>
 <li>tool.checker.excel.checker.YunChangPrimaryChecker：检测YunChangExcel规范的主键唯一性。</li>
-<li>tool.checker.excel.checker.DataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
+<li>tool.checker.excel.checker.YunChangDataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
 <li>tool.checker.excel.checker.RelationChecker：检测加载策略1(tool.checker.excel.finder.RelationExcelFinder)的引用正确性。</li>
-<li>tool.checker.excel.checker.ArrayLengthChecker：检测加载策略2(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
+<li>tool.checker.excel.checker.YunChangArrayChecker：检测加载策略2(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
 </ol>
 
 <b>YunChangExcel规范(tool.checker.excel.data.YunChangExcel实现方式)：</b>
