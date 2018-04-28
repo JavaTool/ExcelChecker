@@ -43,7 +43,7 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 <li>第二行：错误记录策略。</li>
 <li>第三行：加载策略组，需要半角逗号分割的完整类名。</li>
 <li>第四行：检测策略组，需要半角逗号分割的完整类名。</li>
-<li>第五行：错误输出策略略。</li>
+<li>第五行：错误输出策略。</li>
 </ol>
 
 <b>七、被检测Excel规范：</b>
