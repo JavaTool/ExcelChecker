@@ -103,24 +103,36 @@ public class Excel {
 	}
 	
 	public void checkData(final ExcelsData excelsData) {
+		for (ContentChecker checker : checkers) {
+			checker.excelBegin(this);
+		}
 		readEachRow(new RowScaner() {
 			
 			@Override
 			public void scan(Row row) {
+				for (ContentChecker checker : checkers) {
+					checker.rowBegin(row.getRowNum());
+				}
 				for (int j = firstColumn, index = 0;j < lastColumn;j++, index++) {
 					if (items[index] == null || row == null) {
 						continue;
 					}
 					String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
 					for (ContentChecker checker : checkers) {
-						if (!checker.check(Excel.this, row.getRowNum(), content, items[index], excelsData)) {
+						if (!checker.check(content, items[index], excelsData)) {
 							break;
 						}
 					}
 				}
+				for (ContentChecker checker : checkers) {
+					checker.rowFinish();
+				}
 			}
 			
 		});
+		for (ContentChecker checker : checkers) {
+			checker.excelFinsih();
+		}
 	}
 	
 	public void setExcelName(String excelName) {
@@ -129,10 +141,6 @@ public class Excel {
 	
 	public String getExcelName() {
 		return excelName;
-	}
-
-	public boolean isLoad() {
-		return isLoad;
 	}
 	
 	public void addChecker(ContentChecker checker) {

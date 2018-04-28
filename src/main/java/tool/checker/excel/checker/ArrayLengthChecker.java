@@ -4,31 +4,17 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
-import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.finder.ArrayFinder;
 
-public final class ArrayLengthChecker implements ContentChecker {
-	
-	private String excelName;
-	
-	private int row = 0;
+public final class ArrayLengthChecker extends BaseContentChecker {
 	
 	private final Map<String, Integer> lengths = Maps.newHashMap();
 
 	@Override
-	public boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData) {
-		// 新表
-		if (!excel.getExcelName().equals(excelName)) {
-			excelName = excel.getExcelName();
-			this.row = 0;
-		}
-		if (this.row != row) {
-			this.row = row;
-			lengths.clear();
-		}
-		
+	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
+		String excelName = excel.getExcelName();
 		String column = item.getName();
 		String key = excelsData.getClassToInstanceMap().getInstance(ArrayFinder.class).getArrayGroup(excelName, column);
 		if (key == null) {
@@ -44,5 +30,19 @@ public final class ArrayLengthChecker implements ContentChecker {
 		}
 		return true;
 	}
+
+	@Override
+	public void rowFinish() {}
+
+	@Override
+	protected void excelBegin() {}
+
+	@Override
+	protected void rowBegin() {
+		lengths.clear();
+	}
+
+	@Override
+	protected void excelFinsihCall() {}
 
 }

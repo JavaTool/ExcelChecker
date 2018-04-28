@@ -6,6 +6,14 @@ import tool.checker.excel.ExcelsData;
 
 public interface ContentChecker {
 	
-	boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData);
+	void excelBegin(Excel excel);
+	
+	void rowBegin(int row);
+	
+	boolean check(String content, ExcelItem item, ExcelsData excelsData);
+	
+	void rowFinish();
+	
+	void excelFinsih();
 
 }

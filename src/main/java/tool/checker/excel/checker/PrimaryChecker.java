@@ -6,38 +6,23 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 
-import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.function.ErrorCatcher;
 
-public final class PrimaryChecker implements ContentChecker {
-	
-	private String excelName;
-	
-	private int row = 0;
+public final class PrimaryChecker extends BaseContentChecker {
 	
 	private boolean hasPrimary = false;
 	
 	private final Set<String> primaryKeys = Sets.newHashSet();
 
 	@Override
-	public boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData) {
-		// 新表
-		if (!excel.getExcelName().equals(excelName)) {
-			excelName = excel.getExcelName();
-			primaryKeys.clear();
-			this.row = 0;
-		}
-		if (this.row != row) {
-			this.row = row;
-			hasPrimary = false;
-		}
+	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
 		// 检测主键列唯一性
 		ErrorCatcher errorCatcher = excelsData.getErrorCatcher();
 		if ("primary".equalsIgnoreCase(item.getIndex())) {
 			if (hasPrimary) {
-				errorCatcher.catchError(excelName, row, item.getName(), "重复的主键列 [" + item.getName() + "].");
+				errorCatcher.catchError(excel.getExcelName(), row, item.getName(), "重复的主键列 [" + item.getName() + "].");
 				return false;
 			} else {
 				hasPrimary = true;
@@ -52,8 +37,24 @@ public final class PrimaryChecker implements ContentChecker {
 			Preconditions.checkArgument(primaryKeys.add(content), "主键 [%s] 重复.", content);
 		} catch (IllegalArgumentException e) {
 			String error = e.getMessage();
-			errorCatcher.catchError(excelName, row, column, (Strings.isNullOrEmpty(error) ? content + " 不能转为int." : error));
+			errorCatcher.catchError(excel.getExcelName(), row, column, (Strings.isNullOrEmpty(error) ? content + " 不能转为int." : error));
 		}
 	}
+
+	@Override
+	public void rowFinish() {}
+
+	@Override
+	protected void excelBegin() {
+		primaryKeys.clear();
+	}
+
+	@Override
+	protected void rowBegin() {
+		hasPrimary = false;
+	}
+
+	@Override
+	protected void excelFinsihCall() {}
 
 }

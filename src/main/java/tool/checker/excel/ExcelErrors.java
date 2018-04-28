@@ -27,4 +27,12 @@ public class ExcelErrors implements ErrorCatcher {
 		return ImmutableList.copyOf(errors);
 	}
 
+	@Override
+	public void catchError(String excelName, String error) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("表[").append(Strings.padStart(excelName, 30, ' ')).append("] ");
+		builder.append("错[").append(error).append("] ");
+		errors.add(builder.toString());
+	}
+
 }

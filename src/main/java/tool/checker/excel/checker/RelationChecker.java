@@ -3,17 +3,16 @@ package tool.checker.excel.checker;
 import com.google.common.base.Strings;
 import com.google.common.collect.SetMultimap;
 
-import tool.checker.excel.Excel;
 import tool.checker.excel.ExcelItem;
 import tool.checker.excel.ExcelRelation;
 import tool.checker.excel.ExcelsData;
 import tool.checker.excel.finder.RelationFinder;
 import tool.checker.excel.function.ErrorCatcher;
 
-public final class RelationChecker implements ContentChecker {
+public final class RelationChecker extends BaseContentChecker {
 
 	@Override
-	public boolean check(Excel excel, int row, String content, ExcelItem item, ExcelsData excelsData) {
+	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
 		if (Strings.isNullOrEmpty(content)) {
 			return true;
 		}
@@ -45,5 +44,17 @@ public final class RelationChecker implements ContentChecker {
 		}
 		return true;
 	}
+
+	@Override
+	public void rowFinish() {}
+
+	@Override
+	protected void excelBegin() {}
+
+	@Override
+	protected void rowBegin() {}
+
+	@Override
+	protected void excelFinsihCall() {}
 
 }
