@@ -1,6 +1,6 @@
 # ExcelChecker
 For check excel correctness and relations.<br>
-config -> create error catcher -> find & load -> custom find & load -> custom check -> output
+excelStruct -> config -> create error catcher -> custom find & load -> custom check -> output
 
 <a href="https://github.com/JavaTool/ExcelChecker/wiki"><h1>已发布版本下载信息</h1></a>
 
@@ -20,10 +20,11 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 
 <b>三、path文件说明：</b>
 <ol>
-<li>第一行为Excel根目录。</li>
-<li>第二行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
-<li>(可无)第三行为Excel关系表名称，需要在本路径内。</li>
-<li>(可无)第四行为错误信息文件名称，需要在本路径内。</li>
+<li>第一行为Excel根目录（<b>首次使用或Excel目录变化时需要修改</b>）。</li>
+<li>(可无)第二行为忽略的Excel，用半角逗号间隔(比如Equipment.xls、Equipment.xls,Item.xlsx)，不填表示无忽略。</li>
+<li>(可无)第三行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
+<li>(可无)第四行为Excel关系表名称，需要在本路径内，不填名称为ExcelCheckerConfig.xlsx。</li>
+<li>(可无)第五行为错误信息文件名称，需要在本路径内，不填名称为excel_check_result.txt。</li>
 </ol>
 
 <b>四、Excel关系表说明：</b>
@@ -57,9 +58,9 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 <b>八、检测策略：</b>
 <ol>
 <li>tool.checker.excel.checker.YunChangPrimaryChecker：检测YunChangExcel规范的主键唯一性。</li>
-<li>tool.checker.excel.checker.DataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
+<li>tool.checker.excel.checker.YunChangDataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
 <li>tool.checker.excel.checker.RelationChecker：检测加载策略1(tool.checker.excel.finder.RelationExcelFinder)的引用正确性。</li>
-<li>tool.checker.excel.checker.ArrayLengthChecker：检测加载策略2(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
+<li>tool.checker.excel.checker.YunChangArrayChecker：检测加载策略2(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
 </ol>
 
 <b>YunChangExcel规范(tool.checker.excel.data.YunChangExcel实现方式)：</b>
