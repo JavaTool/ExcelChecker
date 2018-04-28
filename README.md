@@ -21,9 +21,10 @@ config -> create error catcher -> find & load -> custom find & load -> custom ch
 <b>三、path文件说明：</b>
 <ol>
 <li>第一行为Excel根目录。</li>
-<li>第二行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
-<li>(可无)第三行为Excel关系表名称，需要在本路径内。</li>
-<li>(可无)第四行为错误信息文件名称，需要在本路径内。</li>
+<li>(可无)第二行为忽略的Excel，用半角逗号间隔(比如Equipment.xls、Equipment.xls,Item.xlsx)，不填表示无忽略。</li>
+<li>(可无)第三行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
+<li>(可无)第四行为Excel关系表名称，需要在本路径内，不填名称为ExcelCheckerConfig.xlsx。</li>
+<li>(可无)第五行为错误信息文件名称，需要在本路径内，不填名称为excel_check_result.txt。</li>
 </ol>
 
 <b>四、Excel关系表说明：</b>
