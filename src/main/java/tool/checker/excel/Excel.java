@@ -2,44 +2,22 @@ package tool.checker.excel;
 
 import static tool.checker.excel.Utils.readCellAsString;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.function.RowScaner;
 
-public class Excel {
-	
-	private int firstRow;
-	
-	private int firstColumn;
-	
-	private int lastRow;
-	
-	private int lastColumn;
-	
-	private String excelName;
-	
-	private ExcelItem[] items;
-	
-	private Map<String, Integer> colums = Maps.newHashMap();
-	
-	private List<ContentChecker> checkers = Lists.newLinkedList();
-	
-	private Sheet sheet;
-	
-	private boolean isLoad;
+public class Excel extends BaseExcel {
 	
 	public void loadExcel(Sheet sheet, ErrorCatcher errorCatcher) {
-		if (isLoad) {
+		if (this.sheet != null) {
 			return;
 		}
 		
@@ -49,7 +27,7 @@ public class Excel {
 		Row dataIndex = sheet.getRow(4);
 		Row fieldNames = sheet.getRow(5);
 		if (fieldNames == null || dataIndex == null || fieldTypes == null) {
-			System.out.println("忽略表 " + excelName);
+			errorCatcher.catchError(excelName, "表头信息不对，忽略。");
 			return;
 		}
 		
@@ -98,8 +76,6 @@ public class Excel {
 				break;
 			}
 		}
-		
-		isLoad = true;
 	}
 	
 	public void checkData(final ExcelsData excelsData) {
@@ -133,28 +109,6 @@ public class Excel {
 		for (ContentChecker checker : checkers) {
 			checker.excelFinsih();
 		}
-	}
-	
-	public void setExcelName(String excelName) {
-		this.excelName = excelName;
-	}
-	
-	public String getExcelName() {
-		return excelName;
-	}
-	
-	public void addChecker(ContentChecker checker) {
-		checkers.add(checker);
-	}
-	
-	public void readEachRow(RowScaner rowScaner) {
-		for (int i = firstRow;i < lastRow;i++) {
-			rowScaner.scan(sheet.getRow(i));
-		}
-	}
-	
-	public ExcelItem getExcelItem(String columnName) {
-		return colums.containsKey(columnName) ? items[colums.get(columnName)] : null;
 	}
 
 }
