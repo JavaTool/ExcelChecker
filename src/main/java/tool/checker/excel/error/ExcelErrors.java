@@ -17,7 +17,7 @@ public class ExcelErrors implements ErrorCatcher {
 		builder.append("行[").append(Strings.padStart(row + "", 4, ' ')).append("] ");
 		builder.append("列[").append(Strings.padStart(columnName + "", 10, ' ')).append("] ");
 		builder.append("错[").append(error).append("] ");
-		errors.add(builder.toString());
+		catchError(builder.toString());
 	}
 
 	@Override
@@ -30,7 +30,12 @@ public class ExcelErrors implements ErrorCatcher {
 		StringBuilder builder = new StringBuilder();
 		builder.append("表[").append(Strings.padStart(excelName, 30, ' ')).append("] ");
 		builder.append("错[").append(error).append("] ");
-		errors.add(builder.toString());
+		catchError(builder.toString());
+	}
+
+	@Override
+	public void catchError(String error) {
+		errors.add(error);
 	}
 
 }

@@ -8,7 +8,9 @@ import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ExcelRelation;
 import tool.checker.excel.finder.RelationFinder;
+import tool.checker.excel.function.DataConsumer;
 
+@DataConsumer({@DataConsumer.Type(value=RelationFinder.class)})
 public final class RelationChecker extends BaseContentChecker {
 
 	@Override

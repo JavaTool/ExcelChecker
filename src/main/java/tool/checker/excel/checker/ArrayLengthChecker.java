@@ -7,7 +7,9 @@ import com.google.common.collect.Maps;
 import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.finder.ArrayFinder;
+import tool.checker.excel.function.DataConsumer;
 
+@DataConsumer({@DataConsumer.Type(value=ArrayFinder.class)})
 public final class ArrayLengthChecker extends BaseContentChecker {
 	
 	private final Map<String, Integer> lengths = Maps.newHashMap();
