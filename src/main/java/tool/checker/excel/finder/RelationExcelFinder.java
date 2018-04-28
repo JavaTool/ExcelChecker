@@ -33,12 +33,12 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 
 	@Override
 	public ExcelRelation getRelation(String excelName, String column) {
-		return relations.get(excelName, column);
+		return relations.get(Utils.getFileName(excelName), column);
 	}
 
 	@Override
 	public SetMultimap<String, String> getRefKeys(String excelName) {
-		return refKeyMap.get(excelName);
+		return refKeyMap.get(Utils.getFileName(excelName));
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 			}
 			
 		});
-		refKeyMap.put(excel.getExcelName(), ImmutableSetMultimap.copyOf(refKeys));
+		refKeyMap.put(Utils.getFileName(excel.getExcelName()), ImmutableSetMultimap.copyOf(refKeys));
 	}
 
 }

@@ -20,7 +20,7 @@ public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
 
 	@Override
 	public String getArrayGroup(String excelName, String column) {
-		return arrayGroups.get(excelName, column);
+		return arrayGroups.get(Utils.getFileName(excelName), column);
 	}
 
 	@Override

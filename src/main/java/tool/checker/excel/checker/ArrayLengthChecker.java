@@ -30,7 +30,7 @@ public final class ArrayLengthChecker implements ContentChecker {
 		}
 		
 		String column = item.getName();
-		String key = excelsData.getClassToInstanceMap().getInstance(ArrayFinder.class).getArrayGroup(content, column);
+		String key = excelsData.getClassToInstanceMap().getInstance(ArrayFinder.class).getArrayGroup(excelName, column);
 		if (key == null) {
 			return true;
 		}
