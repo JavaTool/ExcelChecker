@@ -5,18 +5,19 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.LineNumberReader;
-import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import tool.checker.excel.data.BaseExcel;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.Callback;
+import tool.checker.excel.function.LineReader;
 
 public class Utils {
 	
@@ -96,18 +97,39 @@ public class Utils {
 		}
 	}
 	
-	public static List<String> readLines(File file) {
-		List<String> lines = Lists.newLinkedList();
+	public static Map<String, String> readLines(File file) {
+		Map<String, String> map = Maps.newHashMap();
+		readLines(file, map);
+		return map;
+	}
+	
+	public static void readLines(File file, LineReader lineReader) {
 		try (LineNumberReader pathReader = new LineNumberReader(new FileReader(file))) {
+			int number = 0;
 			String line;
 			while ((line = pathReader.readLine()) != null) {
-				lines.add(line);
+				lineReader.readLine(number++, line);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		return lines;
+	}
+	
+	public static void readLines(File file, final Map<String, String> map) {
+		readLines(file, new LineReader() {
+			
+			@Override
+			public void readLine(int lineNumber, String line) {
+				saveKeyValue(line, map);
+			}
+			
+		});
+	}
+	
+	public static void saveKeyValue(String line, Map<String, String> map) {
+		String[] infos = line.split("=", -2);
+		map.put(infos[0].trim(), infos[1].trim());
 	}
 
 }

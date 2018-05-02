@@ -1,7 +1,7 @@
 package tool.checker.excel;
 
 import java.io.File;
-import java.util.List;
+import java.util.Map;
 
 import tool.checker.excel.checker.ContentChecker;
 import tool.checker.excel.config.ConfigLoader;
@@ -20,26 +20,26 @@ final class ExcelChecker {
 		File dir = new File(configPath);
 		ExcelsData excelsData = new ExcelsData();
 		excelsData.setDir(dir);
-		List<String> infoList = Utils.readLines(new File(dir, "config.txt"));
+		Map<String, String> configs = Utils.readLines(new File(dir, "config.txt"));
 		try {
 			// 加载Excel类
-			excelsData.setExcelClass((Class<BaseExcel>) Class.forName(infoList.get(0)));
+			excelsData.setExcelClass((Class<BaseExcel>) Class.forName(configs.get("ExcelStruct")));
 			// 加载配置
-			((ConfigLoader) Class.forName(infoList.get(1)).newInstance()).load(excelsData);
+			((ConfigLoader) Class.forName(configs.get("ConfigLoader")).newInstance()).load(excelsData);
 			// 创建错误收集策略
-			excelsData.setErrorCatcher((ErrorCatcher) Class.forName(infoList.get(2)).newInstance());
+			excelsData.setErrorCatcher((ErrorCatcher) Class.forName(configs.get("ErrorCatcher")).newInstance());
 			// 执行加载策略组
-			for (String finderName : infoList.get(3).split(",")) {
+			for (String finderName : configs.get("ExcelFinder").split(",")) {
 				((ExcelFinder) Class.forName(finderName).newInstance()).find(excelsData);
 			}
 			// 创建检测策略组
-			createCheckers(infoList.get(4).split(","), excelsData);
+			createCheckers(configs.get("ExcelChecker").split(","), excelsData);
 			// 检测
 			for (BaseExcel excel : excelsData.getExcels().values()) {
 				excel.checkData(excelsData);
 			}
 			// 创建输出策略
-			((Outputer) Class.forName(infoList.get(5)).newInstance()).out(excelsData);
+			((Outputer) Class.forName(configs.get("Outputer")).newInstance()).out(excelsData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
