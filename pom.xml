@@ -4,7 +4,7 @@
 
   <groupId>tool.checker</groupId>
   <artifactId>excel</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
 
   <name>check</name>
