@@ -1,22 +1,18 @@
 package tool.checker.excel.data;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 public class ExcelItem {
 	
 	private String name;
 	
 	private String type;
 	
-	private String index;
-	
 	private int colum;
-
-	public String getIndex() {
-		return index;
-	}
-
-	public void setIndex(String index) {
-		this.index = index;
-	}
+	
+	private Map<String, String> attributes = Maps.newHashMap();
 
 	public String getType() {
 		return type;
@@ -40,6 +36,14 @@ public class ExcelItem {
 
 	public void setColum(int colum) {
 		this.colum = colum;
+	}
+	
+	public void putAttribute(String key, String attribute) {
+		attributes.put(key, attribute);
+	}
+	
+	public String getAttribute(String key) {
+		return attributes.get(key);
 	}
 
 }

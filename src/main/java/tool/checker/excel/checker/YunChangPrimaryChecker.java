@@ -20,7 +20,7 @@ public final class YunChangPrimaryChecker extends BaseContentChecker {
 	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
 		// 检测主键列唯一性
 		ErrorCatcher errorCatcher = excelsData.getErrorCatcher();
-		if ("primary".equalsIgnoreCase(item.getIndex())) {
+		if ("primary".equalsIgnoreCase(item.getAttribute("index"))) {
 			if (hasPrimary) {
 				errorCatcher.catchError(excel.getExcelName(), row, item.getName(), "重复的主键列 [" + item.getName() + "].");
 				return false;

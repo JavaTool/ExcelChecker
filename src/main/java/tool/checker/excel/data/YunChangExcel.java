@@ -69,7 +69,7 @@ public class YunChangExcel extends BaseExcel {
 			}
 			items[index] = new ExcelItem();
 			items[index].setType(readCellAsString(fieldTypes.getCell(i)));
-			items[index].setIndex(readCellAsString(dataIndex.getCell(i)));
+			items[index].putAttribute("index", readCellAsString(dataIndex.getCell(i)));
 			if (names.containsKey(name)) {
 				errorCatcher.catchError(excelName, 6, name, "列名称与第" + names.get(name) + "列重复.");
 			} else {
