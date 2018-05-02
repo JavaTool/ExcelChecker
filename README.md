@@ -1,6 +1,5 @@
 # ExcelChecker
 For check excel correctness and relations.<br>
-excelStruct -> config -> create error catcher -> custom find & load -> custom check -> output
 
 <a href="https://github.com/JavaTool/ExcelChecker/wiki"><h1>已发布版本下载信息</h1></a>
 
