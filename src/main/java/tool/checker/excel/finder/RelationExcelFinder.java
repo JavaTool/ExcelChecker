@@ -24,7 +24,7 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.RowScaner;
 
-public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
+public final class RelationExcelFinder implements RelationSupplier, ExcelFinder {
 	
 	private final Table<String, String, ExcelRelation> relations = HashBasedTable.create();
 	
@@ -82,7 +82,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				BaseExcel excel = excels.get(excelName);
 				loadRefs(excel, refKeys.get(excelName));
 			}
-			excelsData.getDataSuppliers().putInstance(RelationFinder.class, this);
+			excelsData.getDataSuppliers().putInstance(RelationSupplier.class, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

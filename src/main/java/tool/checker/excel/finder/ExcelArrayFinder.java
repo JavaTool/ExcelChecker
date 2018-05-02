@@ -14,7 +14,7 @@ import tool.checker.excel.Utils;
 import tool.checker.excel.data.BaseExcel;
 import tool.checker.excel.data.ExcelsData;
 
-public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
+public final class ExcelArrayFinder implements ArraySupplier, ExcelFinder {
 	
 	private final Table<String, String, String> arrayGroups = HashBasedTable.create();
 
@@ -39,7 +39,7 @@ public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
 					addArray(excelName, columArray);
 				}
 			}
-			excelsData.getDataSuppliers().putInstance(ArrayFinder.class, this);
+			excelsData.getDataSuppliers().putInstance(ArraySupplier.class, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

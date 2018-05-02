@@ -6,10 +6,10 @@ import com.google.common.collect.SetMultimap;
 import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ExcelRelation;
-import tool.checker.excel.finder.RelationFinder;
+import tool.checker.excel.finder.RelationSupplier;
 import tool.checker.excel.function.DataConsumer;
 
-@DataConsumer({@DataConsumer.Type(value=RelationFinder.class)})
+@DataConsumer({@DataConsumer.Type(value=RelationSupplier.class)})
 public final class RelationChecker extends BaseContentChecker {
 
 	@Override
@@ -18,7 +18,7 @@ public final class RelationChecker extends BaseContentChecker {
 			return true;
 		}
 		String name = item.getName();
-		RelationFinder relationFinder = getDataSupplier(RelationFinder.class);
+		RelationSupplier relationFinder = getDataSupplier(RelationSupplier.class);
 		String excelName = excel.getExcelName();
 		ExcelRelation excelRelation = relationFinder.getRelation(excelName, name);
 		if (excelRelation == null) {

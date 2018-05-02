@@ -4,7 +4,7 @@ import com.google.common.collect.SetMultimap;
 
 import tool.checker.excel.function.DataSupplier;
 
-public interface RelationFinder extends DataSupplier {
+public interface RelationSupplier extends DataSupplier {
 	
 	ExcelRelation getRelation(String excelName, String column);
 	

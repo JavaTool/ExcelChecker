@@ -6,10 +6,10 @@ import com.google.common.collect.Maps;
 
 import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.error.ErrorCatcher;
-import tool.checker.excel.finder.ArrayFinder;
+import tool.checker.excel.finder.ArraySupplier;
 import tool.checker.excel.function.DataConsumer;
 
-@DataConsumer({@DataConsumer.Type(value=ArrayFinder.class)})
+@DataConsumer({@DataConsumer.Type(value=ArraySupplier.class)})
 public final class YunChangArrayChecker extends BaseContentChecker {
 	
 	private final Map<String, Integer> lengths = Maps.newHashMap();
@@ -18,7 +18,7 @@ public final class YunChangArrayChecker extends BaseContentChecker {
 	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
 		String excelName = excel.getExcelName();
 		String column = item.getName();
-		String key = getDataSupplier(ArrayFinder.class).getArrayGroup(excelName, column);
+		String key = getDataSupplier(ArraySupplier.class).getArrayGroup(excelName, column);
 		if (key == null) {
 			return true;
 		}
