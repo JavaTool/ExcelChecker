@@ -39,7 +39,7 @@ public final class ExcelArrayFinder implements ArrayFinder, ExcelFinder {
 					addArray(excelName, columArray);
 				}
 			}
-			excelsData.getClassToInstanceMap().putInstance(ArrayFinder.class, this);
+			excelsData.getDataSuppliers().putInstance(ArrayFinder.class, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

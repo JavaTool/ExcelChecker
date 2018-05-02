@@ -5,7 +5,7 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import tool.checker.excel.data.ExcelItem;
-import tool.checker.excel.data.ExcelsData;
+import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ArrayFinder;
 import tool.checker.excel.function.DataConsumer;
 
@@ -15,17 +15,17 @@ public final class YunChangArrayChecker extends BaseContentChecker {
 	private final Map<String, Integer> lengths = Maps.newHashMap();
 
 	@Override
-	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
+	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
 		String excelName = excel.getExcelName();
 		String column = item.getName();
-		String key = excelsData.getClassToInstanceMap().getInstance(ArrayFinder.class).getArrayGroup(excelName, column);
+		String key = getDataSupplier(ArrayFinder.class).getArrayGroup(excelName, column);
 		if (key == null) {
 			return true;
 		}
 		
 		if (lengths.containsKey(key)) {
 			if (content.split("&&").length != lengths.get(key)) {
-				excelsData.getErrorCatcher().catchError(excelName, row, column, "数组列[" + key + "]长度不同。");
+				errorCatcher.catchError(excelName, row, column, "数组列[" + key + "]长度不同。");
 			}
 		} else {
 			lengths.put(key, content.split("&&").length);

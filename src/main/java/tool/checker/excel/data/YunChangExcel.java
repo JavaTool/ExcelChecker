@@ -112,7 +112,7 @@ public class YunChangExcel extends BaseExcel {
 					}
 					String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
 					for (ContentChecker checker : checkers) {
-						if (!checker.check(content, items[index], excelsData)) {
+						if (!checker.check(content, items[index], excelsData.getErrorCatcher())) {
 							break;
 						}
 					}

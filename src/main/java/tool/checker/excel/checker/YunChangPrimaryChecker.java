@@ -7,7 +7,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 
 import tool.checker.excel.data.ExcelItem;
-import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 
 public final class YunChangPrimaryChecker extends BaseContentChecker {
@@ -17,9 +16,8 @@ public final class YunChangPrimaryChecker extends BaseContentChecker {
 	private final Set<String> primaryKeys = Sets.newHashSet();
 
 	@Override
-	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
+	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
 		// 检测主键列唯一性
-		ErrorCatcher errorCatcher = excelsData.getErrorCatcher();
 		if ("primary".equalsIgnoreCase(item.getAttribute("index"))) {
 			if (hasPrimary) {
 				errorCatcher.catchError(excel.getExcelName(), row, item.getName(), "重复的主键列 [" + item.getName() + "].");

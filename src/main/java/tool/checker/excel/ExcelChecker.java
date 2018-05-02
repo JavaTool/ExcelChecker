@@ -33,18 +33,7 @@ final class ExcelChecker {
 				((ExcelFinder) Class.forName(finderName).newInstance()).find(excelsData);
 			}
 			// 创建检测策略组
-			for (String checkerName : infoList.get(4).split(",")) {
-				Class<ContentChecker> clz = (Class<ContentChecker>) Class.forName(checkerName);
-				String needClass = checkDataConsumer(clz.getAnnotation(DataConsumer.class), excelsData);
-				if (needClass == null) {
-					ContentChecker checker = (clz.newInstance());
-					for (BaseExcel excel : excelsData.getExcels().values()) {
-						excel.addChecker(checker);
-					}
-				} else {
-					excelsData.getErrorCatcher().catchError("检测策略[" + checkerName + "]没有数据提供者[" + needClass + "].");
-				}
-			}
+			createCheckers(infoList.get(4).split(","), excelsData);
 			// 检测
 			for (BaseExcel excel : excelsData.getExcels().values()) {
 				excel.checkData(excelsData);
@@ -56,15 +45,37 @@ final class ExcelChecker {
 		}
 	}
 	
-	private static String checkDataConsumer(DataConsumer dataConsumer, ExcelsData excelsData) {
+	private static void createCheckers(String[] checkerNames, ExcelsData excelsData) throws Exception {
+		for (String checkerName : checkerNames) {
+			@SuppressWarnings("unchecked")
+			Class<ContentChecker> clz = (Class<ContentChecker>) Class.forName(checkerName);
+			ContentChecker checker = createChecker(clz, excelsData);
+			if (checker == null) {
+				continue;
+			}
+			for (BaseExcel excel : excelsData.getExcels().values()) {
+				excel.addChecker(checker);
+			}
+		}
+	}
+	
+	private static ContentChecker createChecker(Class<ContentChecker> clz, ExcelsData excelsData) throws Exception {
+		DataConsumer dataConsumer = clz.getAnnotation(DataConsumer.class);
 		if (dataConsumer != null) {
 			for (DataConsumer.Type type : dataConsumer.value()) {
-				if (!excelsData.getClassToInstanceMap().containsKey(type.value())) {
-					return type.value().getName();
+				if (!excelsData.getDataSuppliers().containsKey(type.value())) {
+					excelsData.getErrorCatcher().catchError("检测策略[" + clz.getName() + "]没有数据提供者[" + type.value().getName() + "].");
+					return null;
 				}
 			}
 		}
-		return null;
+		ContentChecker checker = clz.newInstance();
+		if (dataConsumer != null) {
+			for (DataConsumer.Type type : dataConsumer.value()) {
+				checker.addDataSuplier(type.value(), excelsData.getDataSuppliers().get(type.value()));
+			}
+		}
+		return checker;
 	}
 
 }

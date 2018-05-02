@@ -23,7 +23,7 @@ public class ExcelsData {
 	
 	private ErrorCatcher errorCatcher;
 	
-	private ClassToInstanceMap<DataSupplier> classToInstanceMap = MutableClassToInstanceMap.create();
+	private ClassToInstanceMap<DataSupplier> dataSupliers = MutableClassToInstanceMap.create();
 	
 	private Class<BaseExcel> excelClass;
 
@@ -63,8 +63,8 @@ public class ExcelsData {
 		this.files = files;
 	}
 
-	public ClassToInstanceMap<DataSupplier> getClassToInstanceMap() {
-		return classToInstanceMap;
+	public ClassToInstanceMap<DataSupplier> getDataSuppliers() {
+		return dataSupliers;
 	}
 
 	public Class<BaseExcel> getExcelClass() {

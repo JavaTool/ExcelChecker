@@ -3,15 +3,13 @@ package tool.checker.excel.checker;
 import com.google.common.base.Strings;
 
 import tool.checker.excel.data.ExcelItem;
-import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.error.ErrorCatcher;
 
 public final class YunChangDataTypeChecker extends BaseContentChecker {
 
 	@Override
-	public boolean check(String content, ExcelItem item, ExcelsData excelsData) {
+	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
 		if (!Strings.isNullOrEmpty(content)) {
-			ErrorCatcher errorCatcher = excelsData.getErrorCatcher();
 			String excelName = excel.getExcelName();
 			switch (item.getType().toLowerCase()) {
 			case "int" : 

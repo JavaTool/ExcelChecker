@@ -82,7 +82,7 @@ public final class RelationExcelFinder implements RelationFinder, ExcelFinder {
 				BaseExcel excel = excels.get(excelName);
 				loadRefs(excel, refKeys.get(excelName));
 			}
-			excelsData.getClassToInstanceMap().putInstance(RelationFinder.class, this);
+			excelsData.getDataSuppliers().putInstance(RelationFinder.class, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
