@@ -19,11 +19,13 @@ For check excel correctness and relations.<br>
 
 <b>三、path文件说明：</b>
 <ol>
-<li>第一行为Excel根目录（<b>首次使用或Excel目录变化时需要修改</b>）。</li>
-<li>(可无)第二行为忽略的Excel，用半角逗号间隔(比如Equipment.xls、Equipment.xls,Item.xlsx)，不填表示无忽略。</li>
-<li>(可无)第三行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
-<li>(可无)第四行为Excel关系表名称，需要在本路径内，不填名称为ExcelCheckerConfig.xlsx。</li>
-<li>(可无)第五行为错误信息文件名称，需要在本路径内，不填名称为excel_check_result.txt。</li>
+<li>1.0.0_aphla版本请见旧版本说明。</li>
+<li>格式为：名称=内容。</li>
+<li>名称[allPath]：Excel根目录（<b>首次使用或Excel目录变化时需要修改</b>）。</li>
+<li>(可无)名称[ignore]：忽略的Excel，用半角逗号间隔(比如Equipment.xls、Equipment.xls,Item.xlsx)，不填表示无忽略。</li>
+<li>(可无)名称[paths]：检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
+<li>(可无)名称[relationPath]：Excel关系表名称，需要在本路径内，不填名称为ExcelCheckerConfig.xlsx。</li>
+<li>(可无)名称[outPath]：错误信息文件名称，需要在本路径内，不填名称为excel_check_result.txt。</li>
 </ol>
 
 <b>四、Excel关系表说明：</b>
@@ -39,12 +41,14 @@ For check excel correctness and relations.<br>
 
 <b>六、config文件说明(从上到下表示了处理流程，示例见文件)：</b>
 <ol>
-<li>第一行：Excel数据结构(用于匹配不同的表定义方式)。</li>
-<li>第二行：Config表加载策略。</li>
-<li>第三行：错误记录策略。</li>
-<li>第四行：加载策略组，需要半角逗号分割的完整类名。</li>
-<li>第五行：检测策略组，需要半角逗号分割的完整类名。</li>
-<li>第六行：错误输出策略。</li>
+<li>1.0.0_aphla版本请见旧版本说明。</li>
+<li>格式为：名称=内容。</li>
+<li>名称[ExcelStruct]：Excel数据结构(用于匹配不同的表定义方式)。</li>
+<li>名称[ConfigLoader]：Config表加载策略。</li>
+<li>名称[ErrorCatcher]：错误记录策略。</li>
+<li>名称[ExcelFinder]：加载策略组，需要半角逗号分割的完整类名。</li>
+<li>名称[ExcelChecker]：检测策略组，需要半角逗号分割的完整类名。</li>
+<li>名称[Outputer]：错误输出策略。</li>
 </ol>
 
 <b>七、加载策略：</b>
@@ -74,4 +78,23 @@ For check excel correctness and relations.<br>
 <li>array类型需要用&&分割。</li>
 <li>Excel关系表第一张表为关系表，用来检测引用是否存在。第一行表头不读取，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表)	外联列(引用的列)。</li>
 <li>Excel关系表arrayGroups表为同长度数组列表，用来检测几个数组列的数组长度是否相同，列名之间用半角逗号分割(例如composeItems,nums)。</li>
+</ol>
+
+<h2>旧版本信息：</h2>
+<b>(1.0.0_aphla)path文件说明：</b>
+<ol>
+<li>第一行为Excel根目录（<b>首次使用或Excel目录变化时需要修改</b>）。</li>
+<li>(可无)第二行为忽略的Excel，用半角逗号间隔(比如Equipment.xls、Equipment.xls,Item.xlsx)，不填表示无忽略。</li>
+<li>(可无)第三行为检测的Excel路径，用半角逗号间隔(比如equip、equip/Equipment.xls、equip,Bag、equip/Equipment.xls,Bag)，不填表示全检测。</li>
+<li>(可无)第四行为Excel关系表名称，需要在本路径内，不填名称为ExcelCheckerConfig.xlsx。</li>
+<li>(可无)第五行为错误信息文件名称，需要在本路径内，不填名称为excel_check_result.txt。</li>
+</ol>
+<b>(1.0.0_aphla)config文件说明(从上到下表示了处理流程，示例见文件)：</b>
+<ol>
+<li>第一行：Excel数据结构(用于匹配不同的表定义方式)。</li>
+<li>第二行：Config表加载策略。</li>
+<li>第三行：错误记录策略。</li>
+<li>第四行：加载策略组，需要半角逗号分割的完整类名。</li>
+<li>第五行：检测策略组，需要半角逗号分割的完整类名。</li>
+<li>第六行：错误输出策略。</li>
 </ol>
