@@ -10,11 +10,11 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.error.ErrorCatcher;
 
 /**
- * 云畅游戏 主键检测组件
+ * YC 主键检测组件
  * @author fuhuiyuan
  * @since 1.0.0
  */
-public final class YunChangPrimaryChecker extends BaseContentChecker {
+public final class YCPrimaryChecker extends BaseContentChecker {
 	
 	/** 是否已经存在主键 */
 	private boolean hasPrimary = false;

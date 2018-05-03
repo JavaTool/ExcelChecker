@@ -1,6 +1,6 @@
-ExcelStruct=tool.checker.excel.data.YunChangExcel
+ExcelStruct=tool.checker.excel.data.YCExcel
 ConfigLoader=tool.checker.excel.config.KeyValueConfigLoader
 ErrorCatcher=tool.checker.excel.error.ExcelErrors
 ExcelFinder=tool.checker.excel.finder.DefaultExcelFinder,tool.checker.excel.finder.EnumAndRelationFinder,tool.checker.excel.finder.ExcelArrayFinder
-ExcelChecker=tool.checker.excel.checker.YunChangPrimaryChecker,tool.checker.excel.checker.YunChangDataTypeChecker,tool.checker.excel.checker.ArrayLengthChecker,tool.checker.excel.checker.SupportEnumRelationChecker
+ExcelChecker=tool.checker.excel.checker.YCPrimaryChecker,tool.checker.excel.checker.YCDataTypeChecker,tool.checker.excel.checker.ArrayLengthChecker,tool.checker.excel.checker.SupportEnumRelationChecker
 Outputer=tool.checker.excel.output.TxtOutputer

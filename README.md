@@ -61,14 +61,14 @@ For check excel correctness and relations.<br>
 
 <b>八、检测组件：</b>
 <ol>
-<li>tool.checker.excel.checker.YunChangPrimaryChecker：检测YunChangExcel规范的主键唯一性。</li>
-<li>tool.checker.excel.checker.YunChangDataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
+<li>tool.checker.excel.checker.YCPrimaryChecker：检测YCExcel规范的主键唯一性。</li>
+<li>tool.checker.excel.checker.YCDataTypeChecker：检测YCExcel规范的数据类型正确性。</li>
 <li>tool.checker.excel.checker.RelationChecker：检测查询数据组件(tool.checker.excel.finder.RelationExcelFinder)的引用正确性。</li>
 <li>tool.checker.excel.checker.ArrayLengthChecker：检测数组查询组件(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
 <li>tool.checker.excel.checker.SupportEnumRelationChecker：检测枚举和引用关系查询组件(tool.checker.excel.finder.EnumAndRelationFinder)记录的引用正确性。可替代RelationChecker。</li>
 </ol>
 
-<b>YunChangExcel规范(tool.checker.excel.data.YunChangExcel实现方式)：</b>
+<b>YCExcel规范(tool.checker.excel.data.YCExcel实现方式)：</b>
 <ol>
 <li>第一行：A格为数据起始行号，B格为数据起始列号，C格为数据结束行号(如果读取时发现整行为空，则提前结束)，D格为数据结束列号。</li>
 <li>第二行：说明。</li>

@@ -15,11 +15,11 @@ import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.function.RowScaner;
 
 /**
- * 云畅游戏 Excel数据结构组件
+ * YC Excel数据结构组件
  * @author fuhuiyuan
  * @since 1.0.0
  */
-public class YunChangExcel extends BaseExcel {
+public final class YCExcel extends BaseExcel {
 
 	@Override
 	public void loadExcel(Sheet sheet, ErrorCatcher errorCatcher) {
