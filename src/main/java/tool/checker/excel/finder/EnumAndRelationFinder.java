@@ -19,12 +19,18 @@ import tool.checker.excel.Utils;
 import tool.checker.excel.data.BaseExcel;
 import tool.checker.excel.data.ExcelsData;
 
-public class EnumAndRelationFinder extends BaseRelationFinder implements EnumAndRelationSupplier {
+/**
+ * 枚举和引用关系查询组件
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
+public final class EnumAndRelationFinder extends BaseRelationFinder implements EnumAndRelationSupplier {
 	
+	/** 关系集合[row=表名称，column=列名称，value=关系数据] */
 	private final Table<String, String, ExcelRelation> relations = HashBasedTable.create();
-	
+	/** 引用集合[key=被引用的表名称，value=引用列集合[key=列名称，value=内容集合]] */
 	private final Map<String, SetMultimap<String, String>> refKeyMap = Maps.newHashMap();
-	
+	/** 枚举集合[key=枚举名称，value=内容集合] */
 	private final SetMultimap<String, String> enums = HashMultimap.create();
 
 	@Override

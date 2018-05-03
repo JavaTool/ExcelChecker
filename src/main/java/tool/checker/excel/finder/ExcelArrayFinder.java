@@ -14,8 +14,14 @@ import tool.checker.excel.Utils;
 import tool.checker.excel.data.BaseExcel;
 import tool.checker.excel.data.ExcelsData;
 
+/**
+ * Excel数组查询组件
+ * @author fuhuiyuan
+ * @since 1.0.1
+ */
 public final class ExcelArrayFinder implements ArraySupplier, ExcelFinder {
 	
+	/** 数组列组集合[row=Excel名称，colum=列名称，value=列组名称] */
 	private final Table<String, String, String> arrayGroups = HashBasedTable.create();
 
 	@Override
@@ -45,6 +51,13 @@ public final class ExcelArrayFinder implements ArraySupplier, ExcelFinder {
 		}
 	}
 	
+	/**
+	 * 添加数组列组
+	 * @param 	excelName
+	 * 			Excel名称
+	 * @param 	array
+	 * 			数组信息
+	 */
 	private void addArray(String excelName, String array) {
 		for (String column : array.split(",")) {
 			arrayGroups.put(excelName, column, array);

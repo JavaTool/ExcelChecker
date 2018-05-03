@@ -6,8 +6,14 @@ import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class ExcelErrors implements ErrorCatcher {
+/**
+ * 默认错误收集组件
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
+public final class ExcelErrors implements ErrorCatcher {
 	
+	/** 错误信息列表 */
 	private List<String> errors = Lists.newLinkedList();
 
 	@Override

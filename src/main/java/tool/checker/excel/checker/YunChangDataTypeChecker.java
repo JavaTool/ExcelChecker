@@ -5,51 +5,82 @@ import com.google.common.base.Strings;
 import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.error.ErrorCatcher;
 
+/**
+ * 云畅游戏 数据类型规范检测组件
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
 public final class YunChangDataTypeChecker extends BaseContentChecker {
 
 	@Override
 	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
 		if (!Strings.isNullOrEmpty(content)) {
-			String excelName = excel.getExcelName();
 			switch (item.getType().toLowerCase()) {
 			case "int" : 
-				readInt(row, content, item.getName(), errorCatcher, excelName);
+				checkInt(content, item.getName(), errorCatcher);
 				break;
 			case "array_int" : 
-				readArrayInt(row, content, item.getName(), errorCatcher, excelName);
+				checkArrayInt(content, item.getName(), errorCatcher);
 				break;
 			case "double" : 
-				readDouble(row, content, item.getName(), errorCatcher, excelName);
+				checkDouble(content, item.getName(), errorCatcher);
 				break;
 			}
 		}
 		return true;
 	}
 	
-	private void readInt(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+	/**
+	 * 检测Int
+	 * @param 	content
+	 * 			检测内容
+	 * @param 	column
+	 * 			列名称
+	 * @param 	errorCatcher
+	 * 			错误捕获组件
+	 */
+	private void checkInt(String content, String column, ErrorCatcher errorCatcher) {
 		try {
 			Integer.parseInt(content);
 		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row, column, content + " 不能转为int.");
+			errorCatcher.catchError(excel.getExcelName(), row, column, content + " 不能转为int.");
 		}
 	}
 	
-	private void readArrayInt(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+	/**
+	 * 检测Int数组
+	 * @param 	content
+	 * 			检测内容
+	 * @param 	column
+	 * 			列名称
+	 * @param 	errorCatcher
+	 * 			错误捕获组件
+	 */
+	private void checkArrayInt(String content, String column, ErrorCatcher errorCatcher) {
 		String[] array = content.split("&&");
 		for (int k = 0;k < array.length;k++) {
 			try {
 				Integer.parseInt(array[k]);
 			} catch (Exception e) {
-				errorCatcher.catchError(excelName, row, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
+				errorCatcher.catchError(excel.getExcelName(), row, column, array[k] + " 不能转为int数组.(k=" + k + "), 内容是 " + content + ".");
 			}
 		}
 	}
 	
-	private void readDouble(int row, String content, String column, ErrorCatcher errorCatcher, String excelName) {
+	/**
+	 * 检测Double
+	 * @param 	content
+	 * 			检测内容
+	 * @param 	column
+	 * 			列名称
+	 * @param 	errorCatcher
+	 * 			错误捕获组件
+	 */
+	private void checkDouble(String content, String column, ErrorCatcher errorCatcher) {
 		try {
 			Double.parseDouble(content);
 		} catch (Exception e) {
-			errorCatcher.catchError(excelName, row, column, content + " 不能转为double.");
+			errorCatcher.catchError(excel.getExcelName(), row, column, content + " 不能转为double.");
 		}
 	}
 

@@ -5,6 +5,11 @@ import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.RelationSupplier;
 import tool.checker.excel.function.DataConsumer;
 
+/**
+ * 关系检测组件，仅检测表之间的引用关系。
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
 @DataConsumer({@DataConsumer.Type(value=RelationSupplier.class)})
 public final class RelationChecker extends BaseRelationChecker {
 

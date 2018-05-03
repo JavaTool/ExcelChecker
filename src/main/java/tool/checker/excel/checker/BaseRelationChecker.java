@@ -8,6 +8,11 @@ import tool.checker.excel.error.ErrorCatcher;
 import tool.checker.excel.finder.ExcelRelation;
 import tool.checker.excel.finder.RelationSupplier;
 
+/**
+ * 关系检测组件基类，实现关系检测方法主体过程。
+ * @author fuhuiyuan
+ * @since 2.0.0
+ */
 public abstract class BaseRelationChecker extends BaseContentChecker {
 
 	@Override
@@ -15,8 +20,8 @@ public abstract class BaseRelationChecker extends BaseContentChecker {
 		if (Strings.isNullOrEmpty(content)) {
 			return true;
 		}
-		String name = item.getName();
 		RelationSupplier relationFinder = getDataSupplier(RelationSupplier.class);
+		String name = item.getName();
 		String excelName = excel.getExcelName();
 		ExcelRelation excelRelation = relationFinder.getRelation(excelName, name);
 		if (excelRelation == null) {
@@ -24,9 +29,9 @@ public abstract class BaseRelationChecker extends BaseContentChecker {
 		}
 		String otherExcelName = excelRelation.getExcel();
 		String foreign = excelRelation.getForeign();
-		if (Strings.isNullOrEmpty(otherExcelName)) {
+		if (Strings.isNullOrEmpty(otherExcelName)) { // 引用表名为空的处理
 			checkIfExcelNull(content, item, foreign, errorCatcher);
-		} else {
+		} else { // 关系引用检测
 			SetMultimap<String, String> refKeys = relationFinder.getRefKeys(otherExcelName);
 			switch (item.getType().toLowerCase()) {
 			case "array_int" : 
@@ -47,6 +52,13 @@ public abstract class BaseRelationChecker extends BaseContentChecker {
 		return true;
 	}
 	
+	/**
+	 * 检测引用表名为空的处理
+	 * @param content
+	 * @param item
+	 * @param foreign
+	 * @param errorCatcher
+	 */
 	protected abstract void checkIfExcelNull(String content, ExcelItem item, String foreign, ErrorCatcher errorCatcher);
 
 	@Override

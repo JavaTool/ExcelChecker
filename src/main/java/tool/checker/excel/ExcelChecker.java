@@ -12,6 +12,11 @@ import tool.checker.excel.finder.ExcelFinder;
 import tool.checker.excel.function.DataConsumer;
 import tool.checker.excel.output.Outputer;
 
+/**
+ * 主类
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
 final class ExcelChecker {
 	
 	@SuppressWarnings("unchecked")
@@ -45,6 +50,14 @@ final class ExcelChecker {
 		}
 	}
 	
+	/**
+	 * 创建全部检测组件
+	 * @param 	checkerNames
+	 * 			组件名称数组
+	 * @param 	excelsData
+	 * 			Excel整体数据
+	 * @throws 	Exception
+	 */
 	private static void createCheckers(String[] checkerNames, ExcelsData excelsData) throws Exception {
 		for (String checkerName : checkerNames) {
 			@SuppressWarnings("unchecked")
@@ -59,6 +72,15 @@ final class ExcelChecker {
 		}
 	}
 	
+	/**
+	 * 创建检测组件
+	 * @param 	clz
+	 * 			组件类型
+	 * @param 	excelsData
+	 * 			Excel整体数据
+	 * @return	检测组件
+	 * @throws 	Exception
+	 */
 	private static ContentChecker createChecker(Class<ContentChecker> clz, ExcelsData excelsData) throws Exception {
 		DataConsumer dataConsumer = clz.getAnnotation(DataConsumer.class);
 		if (dataConsumer != null) {

@@ -12,10 +12,16 @@ import tool.checker.excel.Utils;
 import tool.checker.excel.data.BaseExcel;
 import tool.checker.excel.data.ExcelsData;
 
+/**
+ * 引用关系查询组件
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
 public final class RelationExcelFinder extends BaseRelationFinder implements RelationSupplier {
 	
+	/** 关系集合[row=表名称，column=列名称，value=关系数据] */
 	private final Table<String, String, ExcelRelation> relations = HashBasedTable.create();
-	
+	/** 引用集合[key=被引用的表名称，value=引用列集合[key=列名称，value=内容集合]] */
 	private final Map<String, SetMultimap<String, String>> refKeyMap = Maps.newHashMap();
 
 	@Override

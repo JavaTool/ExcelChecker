@@ -15,6 +15,11 @@ import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.Callback;
 import tool.checker.excel.function.ExcelFilter;
 
+/**
+ * 默认Excel查询组件
+ * @author fuhuiyuan
+ * @since 1.0.0
+ */
 public final class DefaultExcelFinder implements ExcelFinder {
 
 	@Override

@@ -21,6 +21,11 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.data.ExcelsData;
 import tool.checker.excel.function.RowScaner;
 
+/**
+ * 关系数据查询组件基类，提供查询主体方法。
+ * @author fuhuiyuan
+ * @since 1.0.1
+ */
 public abstract class BaseRelationFinder implements ExcelFinder {
 
 	@Override
@@ -71,12 +76,38 @@ public abstract class BaseRelationFinder implements ExcelFinder {
 		}
 	}
 	
+	/**
+	 * 开始处理
+	 */
 	protected abstract void start();
 	
+	/**
+	 * 保存关系
+	 * @param 	excelName
+	 * 			Excel名称
+	 * @param 	columName
+	 * 			列名称
+	 * @param 	otherExcel
+	 * 			引用的Excel名称
+	 * @param 	foreign
+	 * 			引用的列名称
+	 */
 	protected abstract void saveRelation(String excelName, String columName, String otherExcel, String foreign);
 	
+	/**
+	 * 结束处理
+	 * @param 	excelsData
+	 * 			Excel整体数据
+	 */
 	protected abstract void finish(ExcelsData excelsData);
 	
+	/**
+	 * 加载引用
+	 * @param 	excel
+	 * 			Excel数据组件
+	 * @param 	itemNames
+	 * 			列名称集合
+	 */
 	private void loadRefs(final BaseExcel excel, final Set<String> itemNames) {
 		final SetMultimap<String, String> refKeys = HashMultimap.create();
 		excel.readEachRow(new RowScaner() {
@@ -96,6 +127,13 @@ public abstract class BaseRelationFinder implements ExcelFinder {
 		saveRefs(excel, refKeys);
 	}
 	
+	/**
+	 * 保存引用
+	 * @param	excel
+	 * 			Excel数据组件
+	 * @param 	refKeys
+	 * 			引用集合
+	 */
 	protected abstract void saveRefs(BaseExcel excel, SetMultimap<String, String> refKeys);
 
 }
