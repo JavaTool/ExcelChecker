@@ -1,0 +1,3 @@
+allPath=D:\\workspace\\data\\excel
+ignore=
+paths=equip
