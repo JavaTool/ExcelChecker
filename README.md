@@ -14,10 +14,10 @@ For check excel correctness and relations.<br>
 <li>config文件没有特殊说明，请不要修改。</li>
 <li>Error.bat为执行文件，请勿修改。</li>
 <li>错误信息会输出到excel_check_result.txt(可配置在path文件，见三.4)中。</li>
-<li>基础检测为数据检测所需的加载策略是否存在。</li>
+<li>基础检测为数据检测所需的查询数据组件是否存在。</li>
 </ol>
 
-<b>三、path文件说明：</b>
+<b>三、path文件说明(针对tool.checker.excel.config.KeyValueConfigLoader实现方式)：</b>
 <ol>
 <li>1.0.0_aphla版本请见旧版本说明。</li>
 <li>格式为：名称=内容。</li>
@@ -30,10 +30,10 @@ For check excel correctness and relations.<br>
 
 <b>四、Excel关系表说明：</b>
 <ol>
-<li>每张Sheet的内容需要按照所选加载策略来填写。</li>
+<li>每张Sheet的内容需要按照所选查询数据组件来填写。</li>
 </ol>
 
-<b>五、错误收集 & 信息输出 策略：</b>
+<b>五、错误收集 & 信息输出 组件：</b>
 <ol>
 <li>tool.checker.excel.error.ExcelErrors：错误信息分为四项：表名、行号、列名和错误信息，排版方式为空格填充表名、行、列，并右对齐。</li>
 <li>tool.checker.excel.output.TxtOutputer：将错误信息按行输出，错误文件会删除已存在的文件，无措时有提示内容。</li>
@@ -43,27 +43,29 @@ For check excel correctness and relations.<br>
 <ol>
 <li>1.0.0_aphla版本请见旧版本说明。</li>
 <li>格式为：名称=内容。</li>
-<li>名称[ExcelStruct]：Excel数据结构(用于匹配不同的表定义方式)。</li>
-<li>名称[ConfigLoader]：Config表加载策略。</li>
-<li>名称[ErrorCatcher]：错误记录策略。</li>
-<li>名称[ExcelFinder]：加载策略组，需要半角逗号分割的完整类名。</li>
-<li>名称[ExcelChecker]：检测策略组，需要半角逗号分割的完整类名。</li>
-<li>名称[Outputer]：错误输出策略。</li>
+<li>名称[ExcelStruct]：Excel数据组件(用于匹配不同的表定义方式)。</li>
+<li>名称[ConfigLoader]：Config表加载组件。</li>
+<li>名称[ErrorCatcher]：错误收集组件。</li>
+<li>名称[ExcelFinder]：查询数据组件组，需要半角逗号分割的完整类名。</li>
+<li>名称[ExcelChecker]：检测组件组，需要半角逗号分割的完整类名。</li>
+<li>名称[Outputer]：错误输出组件。</li>
 </ol>
 
-<b>七、加载策略：</b>
+<b>七、查询数据组件：</b>
 <ol>
-<li>tool.checker.excel.finder.DefaultExcelFinder：记录全部文件，按指定Excel的数据结构加载Excel数据。</li>
+<li>tool.checker.excel.finder.DefaultExcelFinder：记录全部文件，按指定Excel的数据结构查询Excel数据。</li>
 <li>tool.checker.excel.finder.RelationExcelFinder：加载引用关系，Excel关系表第一张表为关系表，用来检测引用是否存在。第一行表头不读取，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表)	外联列(引用的列)。</li>
 <li>tool.checker.excel.finder.ExcelArrayFinder：加载相同数组长度的列信息，Excel关系表arrayGroups表为同长度数组列表，用来检测几个数组列的数组长度是否相同，列名之间用半角逗号分割(例如composeItems,nums)。</li>
+<li>tool.checker.excel.finder.EnumAndRelationFinder：加载引用关系和枚举，Excel关系表第一张表为关系表，用来检测引用是否存在。第一行表头不读取，需要四列：表名(被检测表)	列名(被检测列)	外联表(引用的表，可以是被检测的表，不填为枚举)	外联列(引用的列，枚举则为枚举类型)，名称为enums的表为枚举表，第一行表头不读取，需要三列：枚举类型	枚举值	备注(不读取)。可以替代RelationExcelFinder。</li>
 </ol>
 
-<b>八、检测策略：</b>
+<b>八、检测组件：</b>
 <ol>
 <li>tool.checker.excel.checker.YunChangPrimaryChecker：检测YunChangExcel规范的主键唯一性。</li>
 <li>tool.checker.excel.checker.YunChangDataTypeChecker：检测YunChangExcel规范的数据类型正确性。</li>
-<li>tool.checker.excel.checker.RelationChecker：检测加载策略1(tool.checker.excel.finder.RelationExcelFinder)的引用正确性。</li>
-<li>tool.checker.excel.checker.YunChangArrayChecker：检测加载策略2(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
+<li>tool.checker.excel.checker.RelationChecker：检测查询数据组件(tool.checker.excel.finder.RelationExcelFinder)的引用正确性。</li>
+<li>tool.checker.excel.checker.ArrayLengthChecker：检测数组查询组件(tool.checker.excel.finder.ExcelArrayFinder)记录的各列数组长度是否相同。</li>
+<li>tool.checker.excel.checker.SupportEnumRelationChecker：检测枚举和引用关系查询组件(tool.checker.excel.finder.EnumAndRelationFinder)记录的引用正确性。可替代RelationChecker。</li>
 </ol>
 
 <b>YunChangExcel规范(tool.checker.excel.data.YunChangExcel实现方式)：</b>
@@ -92,9 +94,9 @@ For check excel correctness and relations.<br>
 <b>(1.0.0_aphla)config文件说明(从上到下表示了处理流程，示例见文件)：</b>
 <ol>
 <li>第一行：Excel数据结构(用于匹配不同的表定义方式)。</li>
-<li>第二行：Config表加载策略。</li>
-<li>第三行：错误记录策略。</li>
-<li>第四行：加载策略组，需要半角逗号分割的完整类名。</li>
-<li>第五行：检测策略组，需要半角逗号分割的完整类名。</li>
-<li>第六行：错误输出策略。</li>
+<li>第二行：Config表加载组件。</li>
+<li>第三行：错误记录组件。</li>
+<li>第四行：查询数据组件组，需要半角逗号分割的完整类名。</li>
+<li>第五行：检测组件组，需要半角逗号分割的完整类名。</li>
+<li>第六行：错误输出组件。</li>
 </ol>

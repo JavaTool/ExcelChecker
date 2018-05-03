@@ -6,6 +6,46 @@
   <artifactId>excel</artifactId>
   <version>2.0.0</version>
   <packaging>jar</packaging>
+  
+  <build>
+	<sourceDirectory>src</sourceDirectory>
+	<plugins>
+		<plugin>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.3</version>
+			<configuration>
+				<source>1.7</source>
+				<target>1.7</target>
+			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>2.4</version>
+			<configuration>
+				<warSourceDirectory>WebContent</warSourceDirectory>
+				<failOnMissingWebXml>false</failOnMissingWebXml>
+			</configuration>
+		</plugin>
+		<plugin>
+			<artifactId>maven-assembly-plugin</artifactId>
+			<executions>  <!--执行器 mvn assembly:assembly -->
+				<execution>
+					<id>make-zip</id><!--名字任意 -->
+					<phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+					<goals>
+						<goal>single</goal><!-- 只运行一次 -->
+					</goals>
+					<configuration>
+						<outputDirectory>package</outputDirectory>
+						<descriptors> <!--描述文件路径 -->
+							<descriptor>package_config\zip.xml</descriptor>
+						</descriptors>
+					</configuration>
+				</execution>
+			</executions>
+		</plugin>
+	</plugins>
+  </build>
 
   <name>check</name>
   <url>http://maven.apache.org</url>
