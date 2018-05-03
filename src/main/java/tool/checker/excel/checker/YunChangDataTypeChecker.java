@@ -57,7 +57,7 @@ public final class YunChangDataTypeChecker extends BaseContentChecker {
 	 * 			错误捕获组件
 	 */
 	private void checkArrayInt(String content, String column, ErrorCatcher errorCatcher) {
-		String[] array = content.split("&&");
+		String[] array = content.split("&&", -2);
 		for (int k = 0;k < array.length;k++) {
 			try {
 				Integer.parseInt(array[k]);

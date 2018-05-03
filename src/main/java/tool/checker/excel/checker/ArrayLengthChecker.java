@@ -31,11 +31,11 @@ public final class ArrayLengthChecker extends BaseContentChecker {
 		}
 		// 检测
 		if (lengths.containsKey(key)) {
-			if (content.split("&&").length != lengths.get(key)) {
+			if (content.split("&&", -2).length != lengths.get(key)) {
 				errorCatcher.catchError(excelName, row, column, "数组列[" + key + "]长度不同。");
 			}
 		} else { // 首次检测该列祖
-			lengths.put(key, content.split("&&").length);
+			lengths.put(key, content.split("&&", -2).length);
 		}
 		return true;
 	}
