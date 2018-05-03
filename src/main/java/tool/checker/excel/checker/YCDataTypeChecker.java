@@ -6,11 +6,11 @@ import tool.checker.excel.data.ExcelItem;
 import tool.checker.excel.error.ErrorCatcher;
 
 /**
- * 云畅游戏 数据类型规范检测组件
+ * YC 数据类型规范检测组件
  * @author fuhuiyuan
  * @since 1.0.0
  */
-public final class YunChangDataTypeChecker extends BaseContentChecker {
+public final class YCDataTypeChecker extends BaseContentChecker {
 
 	@Override
 	public boolean check(String content, ExcelItem item, ErrorCatcher errorCatcher) {
