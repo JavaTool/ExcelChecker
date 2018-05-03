@@ -21,7 +21,7 @@ final class ExcelChecker {
 	
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		String configPath = args.length > 0 ? args[0].replace("\\", "\\\\") : "F:\\software\\product\\excelChecker\\2.0.0";
+		String configPath = args.length > 0 ? args[0].replace("\\", "\\\\") : "config";
 		File dir = new File(configPath);
 		ExcelsData excelsData = new ExcelsData();
 		excelsData.setDir(dir);
