@@ -150,7 +150,7 @@ public final class YCExcel extends BaseExcel {
 					if (items[index] == null || row == null) {
 						continue;
 					}
-					String content = items[index] == null || row == null ? "" : readCellAsString(row.getCell(j));
+					String content = readCellAsString(row.getCell(j));
 					// 检测单元格内容
 					for (ContentChecker checker : checkers) {
 						if (!checker.check(content, items[index], excelsData.getErrorCatcher())) {
